@@ -12,11 +12,11 @@ Hope you had a good christmas, new year, exam season and break before Semester 2
 
 ## Set Up
 
-If you are developing on anything other than GNU/Linux, I heartly recommend that you obtain access GNU/Linux machine, be that a VM or Kilburn machine, before starting work on this project just to save you from any more work than nessecary. The following commands are for a GNU/Linux machine.
+If you are developing on anything other than Linux, I heartly recommend that you obtain access Linux machine, be that a VM or Kilburn machine, before starting work on this project just to save you from any more work than nessecary. The following commands are for a Linux machine.
 
 1. Create a directory call social in the your home directory (mkdir social)
 
-2. Inside of this directory, clone the git repository
+2. Inside of this directory, clone the git repository (git clone ssh://gitlab@gitlab.cs.man.ac.uk:22222/g75462fw/social.git)
 
 ### MySQL Server
 
@@ -49,7 +49,7 @@ https://docs.python.org/3/library/venv.html
 
 The python virtual environment will ensure that everyone is using the same versions of each of the python packages in the project to avoid any error arising in the code from different versions of modules being used.
 
-I have decide to use Python 3.8 because that's the version that currently ships with most GNU/Linux distros and therefore is stable
+I have decide to use Python 3.8 because that's the version that currently ships with most Linux distros and therefore is stable
 
 1. Check that you are using Python 3.8 (python3 --version)
 
