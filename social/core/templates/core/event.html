@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title>Example Event</title>
+</head>
+<body>
+    <header>
+        <form action="login.html">
+            <a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a>
+            <input type="text" id="search" name="search" placeholder="Search...">
+            <input type="submit" id="login" name="login" value="log in">
+        </form>
+        <hr>
+    </header>
+
+    <table>
+        <tr>
+            <th>
+                <img src={% static 'core/fireworks2.jpg' %}>
+            </th>
+            <th>
+                <h1>event title</h1>
+                <p>a longer paragraph all about the event</p>
+                <button>Register interest</button>
+            </th>
+        </tr>
+    </table>
+    <hr>
+    <button>organiser's facebook</button><button>organiser's instagram</button><button>organiser's discord</button> <button><h3>Share</h3></button>
+    <hr>
+    <p>An even longer paragraph about all the details that the organiser wants to share</p>
+    <hr>
+    <p>List of tags associated with event</p>
+    <hr>
+    <h2>More events</h2>
+    <table>
+        <tr>
+          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+        </tr>
+    </table>
+
+</body>
+</html>
