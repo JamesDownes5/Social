@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
     <title>Social Events</title>
 </head>
 <body>
     <header>
         <form action="login.html">
-            <a href="index.html"><img src="assets/logo.png" style="width:50px;height: auto"></a>
+            <a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a>
             <input type="text" id="search" name="search" placeholder="Search...">
             <input type="submit" id="login" name="login" value="log in">
         </form>
@@ -27,19 +28,19 @@
 
     <table>
         <tr>
-          <th><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></th>
-          <th><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></th>
-          <th><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
         </tr>
         <tr>
-          <td><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></td>
-          <td><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></td>
-          <td><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></td>
+          <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></td>
+          <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></td>
+          <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></td>
         </tr>
         <tr>
-          <td><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></td>
-          <td><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></td>
-          <td><a href="event.html"><img src="assets/fireworks.jpg" style="width:500px;height: auto;"><p>Example event</p></a></td>
+          <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></td>
+          <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></td>
+          <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></td>
         </tr>
       </table> 
 </body>
