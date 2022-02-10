@@ -12,13 +12,18 @@
 
     <h1>Create Account</h1>
     <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
-    <form action="account.html">
+    <form method="post">
+        <!--
         <input type="text" id="name" name="name" placeholder="name"><br>
         <input type="text" id="email" name="email" placeholder="email"><br>
         <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
         <input type="text" id="confirm" name="confirm" placeholder="Confirm Password"><br>
+        -->
+        {% csrf_token %}
+        {{ form.as_p }}
         <p>Already have an account? <a href={% url 'login' %}>Log In</a></p>
-        <input type="submit" id="CreateAccount" name="CreateAccount" value="Create Account">
+        <button type="submit">Create Account</button>
+        <!-- <input type="submit" id="CreateAccount" name="CreateAccount" value="Create Account"> -->
     </form>
 </body>
 </html>
