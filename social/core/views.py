@@ -1,11 +1,26 @@
 from django.shortcuts import render
 from .forms import *
+from .models import Event
 
 def index(request):
     return render(request, 'core/index.html')
 
-def event(request):
-    return render(request, 'core/event.html')
+def event(request, event_id):
+
+    event = Event.objects.get(id=event_id)
+    event_title = event.title
+   # event_image = event.image
+    event_location = event.location
+    event_date = event.date
+   # event_time = event.time
+    event_desc = event.desc
+    event_ticket = event.ticket
+   # event_social = event.social
+   # event_tag = event.tag
+
+    context = {'event_title': event_title, 'event_desc': event_desc, 'event_ticket': event_ticket}
+
+    return render(request, 'core/event.html', context)
 
 def create(request):
     if request.method == 'POST':

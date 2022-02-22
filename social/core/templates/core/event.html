@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <title>Example Event</title>
+    <title>{{ event_title }}</title>
 </head>
 <body>
     <header>
@@ -23,16 +23,16 @@
                 <img src={% static 'core/fireworks2.jpg' %}>
             </th>
             <th>
-                <h1>event title</h1>
-                <p>a longer paragraph all about the event</p>
-                <button>Register interest</button>
+                <h1>{{ event_title }}</h1>
+                <p>{{ event_desc }}</p>
+                <button>Tickets</button>
             </th>
         </tr>
     </table>
     <hr>
     <button>organiser's facebook</button><button>organiser's instagram</button><button>organiser's discord</button> <button><h3>Share</h3></button>
     <hr>
-    <p>An even longer paragraph about all the details that the organiser wants to share</p>
+    <p>{{ event_desc }}</p>
     <hr>
     <p>List of tags associated with event</p>
     <hr>
