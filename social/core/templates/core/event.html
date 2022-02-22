@@ -4,14 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="style.css" />
+    <script src="https://kit.fontawesome.com/89e830680d.js" crossorigin="anonymous"></script>
     {% load static %}
     <title>Example Event</title>
 </head>
+<script></script>    
 <body>
     <header>
         <form action="login.html">
             <a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a>
-            <input type="text" id="search" name="search" placeholder="Search...">
+           
+            <div class="search-box">
+                <input class="search-text" type="text" name=="" placeholder="Search events">
+                <a class="search-button" href="#">
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+                </a>
+
+
+            </div>
+            
+
+
             <input type="submit" id="login" name="login" value="log in">
         </form>
         <hr>
@@ -30,7 +45,11 @@
         </tr>
     </table>
     <hr>
-    <button>organiser's facebook</button><button>organiser's instagram</button><button>organiser's discord</button> <button><h3>Share</h3></button>
+        
+    <a href="http://facebook.com"><img src={% static 'core/facebook.png' %} style="width:64px;height: 64px;"/> </a>
+    <a href="http://instagram.com"><img src={% static 'core/instagram.png' %} style="width:64px;height: 64px;"/> </a>
+    <a href="http://discord.com"><img src={% static 'core/discord.png' %} style="width:64px;height: 64px;"/> </a>
+    
     <hr>
     <p>An even longer paragraph about all the details that the organiser wants to share</p>
     <hr>
