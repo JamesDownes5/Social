@@ -4,21 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <title>Create Account</title>
+    <link rel = "stylesheet" href="style.css" />
+    <title>Sign Up</title>
 </head>
 <body>
-    <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
+    
+    <div id="SignUp" class="border">
 
-    <h1>Create Account</h1>
-    <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
-    <form action="account.html">
-        <input type="text" id="name" name="name" placeholder="name"><br>
-        <input type="text" id="email" name="email" placeholder="email"><br>
-        <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
-        <input type="text" id="confirm" name="confirm" placeholder="Confirm Password"><br>
-        <p>Already have an account? <a href={% url 'login' %}>Log In</a></p>
-        <input type="submit" id="CreateAccount" name="CreateAccount" value="Create Account">
-    </form>
+        <h1>Sign Up</h1>
+        <form>
+            <label>Username: </label>
+            <input type="text" placeholder="Username">
+            <label>Email: </label>
+            <input type="text" placeholder="Email">
+            <label>Password: </label>
+            <input type="text" placeholder="Password">
+            <label>Confirm Password: </label>
+            <input type="text" placeholder="Confirm Password">
+            <p>
+                <input type="button" value="Sign Up">
+                <input type="button" value="Log In">
+            </p>
+        </form>
+
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="SignUp.js"></script>
+
 </body>
 </html>
+
+        <!-- <div style="text-align: left"><img v-bind:src="logo"/></div> -->
