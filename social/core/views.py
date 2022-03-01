@@ -8,17 +8,19 @@ def index(request):
 def event(request, event_id):
 
     event = Event.objects.get(id=event_id)
-    event_title = event.title
-   # event_image = event.image
-    event_location = event.location
-    event_date = event.date
-   # event_time = event.time
-    event_desc = event.desc
-    event_ticket = event.ticket
-   # event_social = event.social
-   # event_tag = event.tag
-
-    context = {'event_title': event_title, 'event_desc': event_desc, 'event_ticket': event_ticket}
+    
+    context = {'event_title': event.title, 
+               'event_image': event.image.url,
+               'event_datetime': event.datetime,
+               'event_street': event.street,
+               'event_area': event.area,
+               'event_city': event.city,
+               'event_desc': event.desc,
+               'event_ticket': event.ticket,
+               'event_facebook': event.facebook,
+               'event_instagram': event.instagram,
+               'event_discord': event.discord,
+               'event_attendance': event.attendance}
 
     return render(request, 'core/event.html', context)
 
