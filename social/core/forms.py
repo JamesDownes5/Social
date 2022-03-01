@@ -40,7 +40,7 @@ class CreateUserForm(UserCreationForm):
         fields = ['username','email','password1','password2']
 
 
-# To update username and password
+# To update username and email
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(label = "e-mail")
 
