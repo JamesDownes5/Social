@@ -13,20 +13,11 @@
     <h1>Create Event</h1>
 
     <form method="post">
-        <!--
-        <input type="text" id="title" name="title" placeholder="title"><br>
-        <input type="text" id="image" name="image" placeholder="image"><br>
-        <input type="text" id="location" name="location" placeholder="location"><br>
-        <input type="text" id="time" name="time" placeholder="time"><br>
-        <input type="text" id="tickets" name="tickets" placeholder="tickets"><br>
-        <input type="text" id="socials" name="socials" placeholder="socials"><br>
-        <input type="text" id="tags" name="tags" placeholder="tags"><br>
-        <input type="text" id="description" name="description" placeholder="description"><br>
-        -->
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <button type="submit">Preview</button>
         <!-- <input type="submit" id="preview" name="preview" value="preview"> -->
     </form>
+
 </body>
 </html>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/89e830680d.js" crossorigin="anonymous"></script>
     {% load static %}
-    <title>{{ event_title }}</title>
+    <title>{{ event.title }}</title>
 </head>
     <link rel = "stylesheet" href={% static 'core/style.css' %} />
     <title>Example Event</title>
@@ -30,32 +30,32 @@
     <table>
         <tr>
             <th>
-                <img src={{ event_image }}>
+                <img src={{ event.image.url }}>
             </th>
             <th>
-                <h1>{{ event_title }}</h1>
-                <p>{{ event_desc }}</p>
+                <h1>{{ event.title }}</h1>
+                <p>{{ event.desc }}</p>
                 <button>Tickets</button>
             </th>
         </tr>
     </table>
     <hr>
         
-    <a href={{ event_facebook }}><img src={% static 'core/facebook.png' %} style="width:64px;height: 64px;"/> </a>
-    <a href={{ event_instagram }}><img src={% static 'core/instagram.png' %} style="width:64px;height: 64px;"/> </a>
-    <a href={{ event_discord }}><img src={% static 'core/discord.png' %} style="width:64px;height: 64px;"/> </a>
+    <a href={{ event.facebook }}><img src={% static 'core/facebook.png' %} style="width:64px;height: 64px;"/> </a>
+    <a href={{ event.instagram }}><img src={% static 'core/instagram.png' %} style="width:64px;height: 64px;"/> </a>
+    <a href={{ event.discord }}><img src={% static 'core/discord.png' %} style="width:64px;height: 64px;"/> </a>
     
     <hr>
-    <p>{{ event_desc }}</p>
+    <p>{{ event.desc }}</p>
     <hr>
     <p>List of tags associated with event</p>
     <hr>
     <h2>More events</h2>
     <table>
         <tr>
-          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
-          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
-          <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href=*><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href=*><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
+          <th><a href=*><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
         </tr>
     </table>
 

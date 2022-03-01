@@ -1,5 +1,6 @@
+from django.forms import ModelForm
+from .models import Event
 from django import forms
-
 
 #create forms here
 
@@ -15,13 +16,8 @@ class SignupForm(forms.Form):
     password = forms.CharField(label = 'Password',required=True)
     confirm = forms.CharField(label='Confirm Password', required=True)
 
-
-class CreateForm(forms.Form):
-    title = forms.CharField(label='Title', required=True)
-    image = forms.ImageField(label='Image', required=True)
-    location = forms.CharField(label = 'Location',required=False)
-    time = forms.CharField(label = 'Time',required=False)
-    tickets = forms.CharField(label='Tickets', required=False)
-    socials = forms.CharField(label='Socials', required=False)
-    tags = forms.CharField(label='Tags', required=False)
-    desc = forms.CharField(label='Description', required=False, widget=forms.Textarea)
+class EventForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = ['title', 'image', 'datetime', 'street', 'area', 'city',
+                  'desc', 'ticket', 'facebook', 'instagram', 'discord']

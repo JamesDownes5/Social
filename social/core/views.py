@@ -1,42 +1,38 @@
+
 from django.shortcuts import render
-from .forms import *
+from django.views import generic
+from .forms import EventForm
 from .models import Event
 
-def index(request):
-    return render(request, 'core/index.html')
+class IndexView(generic.ListView):
+    template_name = 'core/index.html'
 
-def event(request, event_id):
+    def get_queryset(self):
+        return
+class EventView(generic.DetailView):
+    model = Event
+    template_name = 'core/event.html'
 
-    event = Event.objects.get(id=event_id)
-    
-    context = {'event_title': event.title, 
-               'event_image': event.image.url,
-               'event_datetime': event.datetime,
-               'event_street': event.street,
-               'event_area': event.area,
-               'event_city': event.city,
-               'event_desc': event.desc,
-               'event_ticket': event.ticket,
-               'event_facebook': event.facebook,
-               'event_instagram': event.instagram,
-               'event_discord': event.discord,
-               'event_attendance': event.attendance}
+class EventCreateView(generic.CreateView):
+    template_name = 'core/create.html'
+    form_class = EventForm
+    success_url = 'event/'
 
-    return render(request, 'core/event.html', context)
+    def form_valid(self, form):
+
+        return super().form_vaild(form)
+
+# class EventUpdateView(generic.UpdateView):
+#     model = Event
+#     template_name = 'edit.html'
+
+# class EventDeleteView(generic.DeleteView):
+#     model = Event
+#     template_name = 'delete.html'
+#     success_url =
 
 def create(request):
-    if request.method == 'POST':
-        form = CreateForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            image = form.cleaned_data['image']
-            location = form.cleaned_data['location']
-            time = form.cleaned_data['time']
-            tickets = form.cleaned_data['tickets']
-            socials = form.cleaned_data['socials']
-            tags = form.cleaned_data['tags']
-            desc = form.cleaned_data['desc']
-    form = CreateForm()
+    
     return render(request, 'core/create.html', {'form' : form})
 
 def signup(request):
