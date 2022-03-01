@@ -11,11 +11,17 @@
     <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
 
     <h1>Log In</h1>
-    <form action="account.html">
+    <form method="post">
+        <!--
         <input type="text" id="email" name="email" placeholder="email"><br>
         <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
+        -->
+        {% csrf_token %}
+        {{ form.as_p }}
         <a href={% url 'signup' %}>Create account</a> <a href={% url 'index' %}>Continue as guest</a><br>
-        <input type="submit" id="login" name="login" value="log in">
+        <button type="submit">Login</button>
+        <!-- <input type="submit" id="login" name="login" value="log in"> -->
     </form>
 </body>
 </html>
+

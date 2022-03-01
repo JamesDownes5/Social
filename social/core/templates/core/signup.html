@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load crispy_forms_tags %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,13 +13,32 @@
 
     <h1>Create Account</h1>
     <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
-    <form action="account.html">
-        <input type="text" id="name" name="name" placeholder="name"><br>
-        <input type="text" id="email" name="email" placeholder="email"><br>
-        <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
-        <input type="text" id="confirm" name="confirm" placeholder="Confirm Password"><br>
-        <p>Already have an account? <a href={% url 'login' %}>Log In</a></p>
-        <input type="submit" id="CreateAccount" name="CreateAccount" value="Create Account">
-    </form>
+        <div class="content-section">
+            <form method="post">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class = "border-bottom mb-4">Sign Up Here</legend>
+                    {{ form | crispy }}
+                </fieldset>
+                <div class = "form-group">
+                    <button class = "btn btn-outline-info" type="submit">Create Account</button>
+                </div>
+            </form>
+            <div class = "border-top pt-3">
+                <small class = "text-muted">
+                    Already Have An Account? <a href={% url 'login' %}>Log In</a>
+                </small>
+            </div>
+            <!--
+            {% if messages %}
+                {% for message in massages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+            -->
+        </div>
 </body>
 </html>
