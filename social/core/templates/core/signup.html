@@ -9,32 +9,33 @@
     <title>Sign Up</title>
 </head>
 <body>
-    
+
+<header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
+   
     <div id="SignUp" class="border">
 
         <h1>Sign Up</h1>
         <form>
             <label>Username: </label>
-            <input type="text" placeholder="Username">
+            <input type="text" id="username" name="username" placeholder="Username">
             <label>Email: </label>
-            <input type="text" placeholder="Email">
+            <input type="text" id="email" name="email" placeholder="Email">
             <label>Password: </label>
-            <input type="text" placeholder="Password">
+            <input type="text" id="password" name="password" placeholder="Password">
             <label>Confirm Password: </label>
-            <input type="text" placeholder="Confirm Password">
+            <input type="text" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
             <p>
-                <input type="button" value="Sign Up">
-                <input type="button" value="Log In">
+                <a href={% url 'login' %}>
+                     <input type="button" value="Sign Up" onclick="alert('You have successfully signed up')">
+                </a>
+                <a href={% url 'login' %}>
+                    <input type="button" value="Log in">
+                </a>    
             </p>
         </form>
 
 
     </div>
 
-    <script src="https://unpkg.com/vue@3"></script>
-    <script src="SignUp.js"></script>
-
 </body>
 </html>
-
-        <!-- <div style="text-align: left"><img v-bind:src="logo"/></div> -->
