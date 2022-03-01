@@ -13,14 +13,15 @@ class EventView(generic.DetailView):
     model = Event
     template_name = 'core/event.html'
 
-class EventCreateView(generic.CreateView):
+class EventCreateView(generic.FormView):
+    model = Event
     template_name = 'core/create.html'
     form_class = EventForm
     success_url = 'event/'
 
-    def form_valid(self, form):
-
-        return super().form_vaild(form)
+class EventPreviewView(generic.CreateView):
+    model = Event
+    template_name = 'core/preview.html'
 
 # class EventUpdateView(generic.UpdateView):
 #     model = Event

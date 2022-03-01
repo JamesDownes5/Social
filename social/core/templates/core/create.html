@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel = "stylesheet" href={% static 'core/style.css' %} /> 
+    <link rel = "stylesheet" href={% static 'core/style.css' %}>
+    <script src={% static 'core/script.js'%}></script> 
+
     <title>Create Event</title>
 </head>
 <body>
@@ -15,11 +17,11 @@
 
     <form method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <button type="submit">Preview</button>
         <!-- <input type="submit" id="preview" name="preview" value="preview"> -->
     </form>
-    <div class="border">
+    {% comment %} <div class="border">
 
         <h1>Create Event</h1>
 
@@ -42,15 +44,12 @@
             </a>
             <a href={% url 'preview' %}>
                 <input type="button" value="Preview">
-            </a>
+            </a> {% endcomment %}
 
         
         </form>
 
         
     </div>
-
-    <script src="script.js"></script>
-
 </body>
 </html>
