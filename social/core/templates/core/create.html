@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
+    <link rel = "stylesheet" href={% static 'core/style.css' %} /> 
     <title>Create Event</title>
 </head>
 <body>
@@ -18,6 +19,38 @@
         <button type="submit">Preview</button>
         <!-- <input type="submit" id="preview" name="preview" value="preview"> -->
     </form>
+    <div class="border">
+
+        <h1>Create Event</h1>
+
+        <form action="event.html">
+            <input type="text" id="title" name="title" placeholder="Title">
+            <p><input type="text" id="location" name="location" placeholder="Location"></p>
+            <p><input type="text" id="time" name="time" placeholder="Time"></p>
+            <p><input type="text" id="tickets" name="tickets" placeholder="Tickets"></p>
+            <p><input type="text" id="socials" name="socials" placeholder="Socials"></p>
+            <p><input type="text" id="tags" name="tags" placeholder="Tags"></p>
+            <p><input type="text" id="description" name="description" placeholder="Description"></p>
+
+            <p>
+                <input type="file" id="image_input" accept="image/png, image/jpg">
+
+            </p>
+
+            <a href={% url 'index' %}>
+                <input type="button" value="Cancel">
+            </a>
+            <a href={% url 'preview' %}>
+                <input type="button" value="Preview">
+            </a>
+
+        
+        </form>
+
+        
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
