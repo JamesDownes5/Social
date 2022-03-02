@@ -1,25 +1,39 @@
+
 from django.shortcuts import render
-from .forms import *
+from django.views import generic
+from .forms import EventForm
+from .models import Event
 
-def index(request):
-    return render(request, 'core/index.html')
+class IndexView(generic.ListView):
+    template_name = 'core/index.html'
 
-def event(request):
-    return render(request, 'core/event.html')
+    def get_queryset(self):
+        return
+class EventView(generic.DetailView):
+    model = Event
+    template_name = 'core/event.html'
+
+class EventCreateView(generic.FormView):
+    model = Event
+    template_name = 'core/create.html'
+    form_class = EventForm
+    success_url = 'event/'
+
+class EventPreviewView(generic.CreateView):
+    model = Event
+    template_name = 'core/preview.html'
+
+# class EventUpdateView(generic.UpdateView):
+#     model = Event
+#     template_name = 'edit.html'
+
+# class EventDeleteView(generic.DeleteView):
+#     model = Event
+#     template_name = 'delete.html'
+#     success_url =
 
 def create(request):
-    if request.method == 'POST':
-        form = CreateForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data['title']
-            image = form.cleaned_data['image']
-            location = form.cleaned_data['location']
-            time = form.cleaned_data['time']
-            tickets = form.cleaned_data['tickets']
-            socials = form.cleaned_data['socials']
-            tags = form.cleaned_data['tags']
-            desc = form.cleaned_data['desc']
-    form = CreateForm()
+    
     return render(request, 'core/create.html', {'form' : form})
 
 def signup(request):
