@@ -5,25 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <title>Create Account</title>
+    <link rel = "stylesheet" href={% static 'core/style.css' %} /> 
+    <title>Sign Up</title>
 </head>
 <body>
-    <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
 
-    <h1>Create Account</h1>
-    <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
-    <form method="post">
-        <!--
-        <input type="text" id="name" name="name" placeholder="name"><br>
-        <input type="text" id="email" name="email" placeholder="email"><br>
-        <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
-        <input type="text" id="confirm" name="confirm" placeholder="Confirm Password"><br>
-        -->
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p>Already have an account? <a href={% url 'login' %}>Log In</a></p>
-        <button type="submit">Create Account</button>
-        <!-- <input type="submit" id="CreateAccount" name="CreateAccount" value="Create Account"> -->
-    </form>
+<header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
+   
+    <div id="SignUp" class="border">
+
+        <h1>Sign Up</h1>
+        <form>
+            <label>Username: </label>
+            <input type="text" id="username" name="username" placeholder="Username">
+            <label>Email: </label>
+            <input type="text" id="email" name="email" placeholder="Email">
+            <label>Password: </label>
+            <input type="text" id="password" name="password" placeholder="Password">
+            <label>Confirm Password: </label>
+            <input type="text" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
+            <p>
+                <a href={% url 'login' %}>
+                     <input type="button" value="Sign Up" onclick="alert('You have successfully signed up')">
+                </a>
+                <a href={% url 'login' %}>
+                    <input type="button" value="Log in">
+                </a>    
+            </p>
+        </form>
+
+
+    </div>
+
 </body>
 </html>
