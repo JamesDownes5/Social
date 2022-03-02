@@ -12,6 +12,7 @@
 
     <h1>Create Account</h1>
     <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
+<<<<<<< HEAD
     <form method="post">
         <!--
         <input type="text" id="name" name="name" placeholder="name"><br>
@@ -52,5 +53,34 @@
 
     </div>
 
+=======
+        <div class="content-section">
+            <form method="post">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class = "border-bottom mb-4">Sign Up Here</legend>
+                    {{ form.as_p}}
+                </fieldset>
+                <div class = "form-group">
+                    <button class = "btn btn-outline-info" type="submit">Create Account</button>
+                </div>
+            </form>
+            <div class = "border-top pt-3">
+                <small class = "text-muted">
+                    Already Have An Account? <a href={% url 'login' %}>Log In</a>
+                </small>
+            </div>
+            <!--
+            {% if messages %}
+                {% for message in massages %}
+                    <div class = "alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+            {% endif %}
+            -->
+        </div>
+>>>>>>> origin/User_Stuff
 </body>
 </html>

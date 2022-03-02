@@ -1,8 +1,10 @@
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from .forms import EventForm
 from .models import Event
+from .forms import *
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 class IndexView(generic.ListView):
     template_name = 'core/index.html'
@@ -32,37 +34,33 @@ class EventPreviewView(generic.CreateView):
 #     template_name = 'delete.html'
 #     success_url =
 
-def create(request):
-    
-    return render(request, 'core/create.html', {'form' : form})
-
 def signup(request):
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            confirm = form.cleaned_data['confirm']
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request,f'Account created for {username}!')
+            return redirect('account')
+    else:
+        form = CreateUserForm()
+    return render(request, 'core/signup.html', {'form':form})
 
-    form = SignupForm()
-    return render(request, 'core/signup.html', {'form' : form})
-
-def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            # print(email,password)
-    form = LoginForm()
-    return render(request, 'core/login.html', {'form': form} )
-
+@login_required()
 def account(request):
-    return render(request, 'core/account.html')
-
-
-'''
-def LoginForm(reguest):
-    return render(request, 'core/login.html')
-'''
+    if request.method == "POST":
+        update_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if update_form.is_valid() and profile_form.is_valid():
+            update_form.save()
+            profile_form.save()
+            messages.success(request, f'Account Updated!')
+            return redirect('account')
+    else:
+        update_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {
+        'update_form': update_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'core/account.html', context)

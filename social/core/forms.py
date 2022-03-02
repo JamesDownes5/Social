@@ -1,22 +1,11 @@
 from django import forms
-from .models import Event
+from .models import Event, Profile
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
 
 #create forms here
 
-class LoginForm(forms.Form):
-
-    email = forms.CharField(label = 'E-Mail',required=True)
-    password = forms.CharField(label = 'Password',required=True)
-
-
-class SignupForm(forms.Form):
-    name = forms.CharField(label='Name', required=True)
-    email = forms.CharField(label = 'E-Mail',required=True)
-    password = forms.CharField(label = 'Password',required=True)
-    confirm = forms.CharField(label='Confirm Password', required=True)
-
-class DateInput(forms.DateInput):
-    input_type = 'datetime'
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
@@ -34,5 +23,24 @@ class EventForm(forms.ModelForm):
                    'instagram': forms.URLInput(attrs={'placeholder': 'Instagram Link'}),
                    'discord': forms.URLInput(attrs={'placeholder': 'Discord Link'}),}
 
+class CreateUserForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 
 
+# To update username and email
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField(label="e-mail")
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+# to upload profile picture
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['img']
