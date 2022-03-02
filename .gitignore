@@ -2,17 +2,11 @@
 *.log
 *.pot
 *.pyc
-<<<<<<< HEAD
 */__pycache__
 */migrations
 db.sqlite3
-media
-=======
-__pycache__/
-db.sqlite3
-media/**/*.jpg
-media/**/*.png
->>>>>>> event_model
+*/media/**/*.jpg
+*/media/**/*.png
 
 # Backup files # 
 *.bak 
