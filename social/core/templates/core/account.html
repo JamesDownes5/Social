@@ -45,7 +45,7 @@
     <hr>
     <a href={% url 'create' %}>Create Event</a>
     <hr>
-    <h2>Events</h2>
+    {% comment %} <h2>Events</h2>
     <table>
         <tr>
           <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
@@ -61,6 +61,6 @@
           <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
           <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;"><p>Example event</p></a></th>
         </tr>
-    </table>
+    </table> {% endcomment %}
 </body>
 </html>

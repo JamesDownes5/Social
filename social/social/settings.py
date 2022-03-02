@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -79,10 +78,10 @@ WSGI_APPLICATION = 'social.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'social_db',
-        'USER': 'django',
+        'NAME': '2021_comp10120_x3',
+        'USER': 'u25144jd',
         'PASSWORD': '4E4814EE45DB644CAF6C93B5BE1E3CF4224CC72D82A2F2E9BB78736D4BF11D0A',
-        'HOST': '127.0.0.1',
+        'HOST': 'dbhost.cs.man.ac.uk',
     }
 }
 

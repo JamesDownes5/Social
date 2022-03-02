@@ -10,6 +10,8 @@
 </head>
 <body>
 
+    <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
+
     <h1>Log In</h1>
     <form method="post">
         <!--
@@ -22,29 +24,6 @@
         <button type="submit">Login</button>
         <!-- <input type="submit" id="login" name="login" value="log in"> -->
     </form>
-<header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
-
-    <div class="border">
-            <h1>Log In</h1>
-            <form>
-
-                <label>Username: </label>
-                <input type="text" id="username" name="username" placeholder="Username">
-                <label>Password: </label>
-                <input type="text" id="password" name="password" placeholder="Password">
-                <p>
-                    <a href={% url 'signup' %}>
-                        <input type="button" value="Sign Up">
-                    </a>
-                    <a href={% url 'index' %}>
-                        <input type="button" value="Log In" onclick="alert('You have successfully logged in')">
-                    </a>
-                </p>
-                
-            </form>
-
-    </div>
-
     <script src="https://unpkg.com/vue@3"></script>
 
 </body>
