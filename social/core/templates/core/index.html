@@ -48,7 +48,8 @@
   </script>
 
   {% load static %}
-  <link rel="stylesheet" href={% static 'core/style.css' %} />
+  <!-- <link rel="stylesheet" href={% static 'core/style.css' %} /> -->
+  <link rel="stylesheet" href={% static 'core/index.css' %} />
   <link rel="stylesheet" href={% static 'core/slideshow.css' %} />
   <title>Social Events</title>
 </head>
@@ -56,8 +57,12 @@
 <body>
 
   <header>
-    <a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a>
-    <input class="searchbox" id="search-header" type="text" name="search-header" placeholder="Search...">
+      <a href={% url 'index' %}><img class="logo" src={% static 'core/logo.png' %}></a>
+    <!-- TODO: form handling -->
+    <form>
+      <input class="searchbox" type="text" name="search-header" placeholder="Search for events...">
+    </form>
+    <a href={% url 'create' %}>Create an event</a>
     <a href={% url 'login' %}>Login</a>
   </header>
   <hr>
@@ -97,17 +102,20 @@
     <input type="text" id="filter" name="filter" placeholder="Filter...">
   </form>
 
-  <table>
+  <!-- 
+    Placeholder events - not in final form
+   -->
+  <table id="events">
     <tr>
-      <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
+      <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
           <p>Example event</p>
-        </a></th>
-      <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
+        </a></td>
+      <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
           <p>Example event</p>
-        </a></th>
-      <th><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
+        </a></td>
+      <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
           <p>Example event</p>
-        </a></th>
+        </a></td>
     </tr>
     <tr>
       <td><a href={% url 'event' %}><img src={% static 'core/fireworks.jpg' %} style="width:500px;height: auto;">
@@ -132,6 +140,7 @@
         </a></td>
     </tr>
   </table>
+  <!-- TODO: Forward and back pagination buttons here -->
 </body>
 
 </html>
