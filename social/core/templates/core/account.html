@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <title>Profile</title>
+    <link rel = "stylesheet" href={% static 'core/style.css' %} />
+    <script src={% static 'core/script.js'%}></script> 
+
 </head>
 <body>
     <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
@@ -43,7 +46,7 @@
         <a href={% url 'logout' %}><input type="button" value="Logout" /></a>
     {% endif %}
     <hr>
-    <a href={% url 'create' %}>Create Event</a>
+    <a href={% url 'create' %}><center>Create Event</a>
     <hr>
     {% comment %} <h2>Events</h2>
     <table>
