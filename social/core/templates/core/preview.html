@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/89e830680d.js" crossorigin="anonymous"></script>
     {% load static %}
-    <title>{{ event.title }}</title>
     <link rel="stylesheet" href={% static 'core/event.css' %} />
-</head> 
+    <title>{{ event.title }}</title>
+</head>  
 <body>
     <header>
         <form action="login.html">
-            <a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:200px;height: auto"></a>
+            <a href={% url 'index' %}><img src={% static 'core/logo2.png' %} style="width:200px;height: auto"></a>
+
             <div class="search-box">
                 <input class="search-text" type="text" name="" placeholder="Search events">
                 <a class="search-button" href="#">
@@ -45,26 +46,27 @@
         </tr>
     </table>
     <hr>
+        
+<a href={{ event.facebook }}><img src={% static 'core/facebook.png' %}
+        style="width:64px;height: 64px;padding: 5px;" /> </a>
+<a href={{ event.instagram }}><img src={% static 'core/instagram.png' %}
+        style="width:64px;height: 64px;padding: 5px;" /> </a>
+<a href={{ event.discord }}><img src={% static 'core/discord.png' %}
+        style="width:64px;height: 64px;padding: 5px;" /> </a>
 
-    <a href={{ event.facebook }}><img src={% static 'core/facebook.png' %}
-            style="width:64px;height: 64px;padding: 5px;" /> </a>
-    <a href={{ event.instagram }}><img src={% static 'core/instagram.png' %}
-            style="width:64px;height: 64px;padding: 5px;" /> </a>
-    <a href={{ event.discord }}><img src={% static 'core/discord.png' %}
-            style="width:64px;height: 64px;padding: 5px;" /> </a>
+<button onclick="copyToClipboard()" style="width: 150px; height: 50px;">Copy Link</button>
 
-    <button onclick="copyToClipboard()" style="width: 150px; height: 50px;">Copy Link</button>
+<script>
+    function copyToClipboard(text) {
+        var inputc = document.body.appendChild(document.createElement("input"));
+        inputc.value = window.location.href;
+        inputc.focus();
+        inputc.select();
+        document.execCommand('copy');
+        inputc.parentNode.removeChild(inputc);
+        alert("URL Copied.");
+    }
+</script>
 
-    <script>
-        function copyToClipboard(text) {
-            var inputc = document.body.appendChild(document.createElement("input"));
-            inputc.value = window.location.href;
-            inputc.focus();
-            inputc.select();
-            document.execCommand('copy');
-            inputc.parentNode.removeChild(inputc);
-            alert("URL Copied.");
-        }
-    </script>
 </body>
 </html>

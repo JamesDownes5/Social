@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <title>Log In</title>
+    <link rel = "stylesheet" href={% static 'core/style.css' %} /> 
+    <title>Log in</title>
 </head>
 <body>
+
     <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
 
     <h1>Log In</h1>
@@ -22,6 +24,7 @@
         <button type="submit">Login</button>
         <!-- <input type="submit" id="login" name="login" value="log in"> -->
     </form>
+    <script src="https://unpkg.com/vue@3"></script>
+
 </body>
 </html>
-

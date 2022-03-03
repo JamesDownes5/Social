@@ -3,8 +3,10 @@
 *.pot
 *.pyc
 */__pycache__
+*/migrations
 db.sqlite3
-media
+*/media/**/*.jpg
+*/media/**/*.png
 
 # Backup files # 
 *.bak 
@@ -134,4 +136,8 @@ GitHub.sublime-settings
 !.vscode/tasks.json 
 !.vscode/launch.json 
 !.vscode/extensions.json 
+<<<<<<< HEAD
 .history
+=======
+.history
+>>>>>>> event_model

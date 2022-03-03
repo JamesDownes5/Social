@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,10 +78,10 @@ WSGI_APPLICATION = 'social.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'social_db',
-        'USER': 'django',
+        'NAME': '2021_comp10120_x3',
+        'USER': 'u25144jd',
         'PASSWORD': '4E4814EE45DB644CAF6C93B5BE1E3CF4224CC72D82A2F2E9BB78736D4BF11D0A',
-        'HOST': '127.0.0.1',
+        'HOST': 'dbhost.cs.man.ac.uk',
     }
 }
 
@@ -125,3 +126,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+LOGIN_REDIRECT_URL = "account"
+LOGIN_URL = "login"
+
+LOGOUT_REDIRECT_URL = 'home'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
