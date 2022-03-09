@@ -8,9 +8,12 @@ from django.contrib.auth.decorators import login_required
 
 class IndexView(generic.ListView):
     template_name = 'core/index.html'
+    model = Event
+    paginate_by = 9
 
     def get_queryset(self):
-        return
+        return Event.objects.order_by('attendance')
+
 class EventView(generic.DetailView):
     model = Event
     template_name = 'core/event.html'

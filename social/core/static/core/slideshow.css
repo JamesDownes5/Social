@@ -9,6 +9,10 @@
   display: none;
 }
 
+img {
+  max-height: 20em;
+}
+
 /* Next & previous buttons */
 .slide-prev, .slide-next {
   cursor: pointer;
