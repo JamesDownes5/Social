@@ -18,11 +18,20 @@
 <header>
     {% block header %}
     <a href={% url 'index' %}><img class="logo" src={% static 'core/logo.png' %}></a>
+    {% block search %}
+    <form>
+        <input class="searchbox" type="text" name="search-header" placeholder="Search for events...">
+    </form>
+    {% endblock search %}
     <span>
+        {% block create %}
         <a href={% url 'create' %} style="margin-right: 1em;">Create an event</a>
+        {% endblock create %}
+        {% block account %}
         <a href={% url 'login' %}>Login</a>
+        {% endblock account %}
     </span>
-    {% endblock %}
+    {% endblock header %}
 </header>
 <hr>
 
