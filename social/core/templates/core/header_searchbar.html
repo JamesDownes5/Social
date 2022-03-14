@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block header %}
+<a href={% url 'index' %}><img class="logo" src={% static 'core/logo.png' %}></a>
+<form>
+  <input class="searchbox" type="text" name="search-header" placeholder="Search for events...">
+</form>
+<a href={% url 'create' %}>Create an event</a>
+<a href={% url 'login' %}>Login</a>
+{% endblock %}
