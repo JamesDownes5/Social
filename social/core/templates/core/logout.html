@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <title>Log In</title>
-</head>
-<body>
-    <h2>You have been Logged Out</h2>
-    <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
-    <a href={% url 'signup' %}>Create account</a> <a href={% url 'login' %}>Login Again</a><br>
-    <h1>Log Out</h1>
-    <button type="submit">Logout</button>
-</body>
-</html>
+{% extends "core/base.html" %}
+{% load static %}
 
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+<h2>You have been Logged Out</h2>
+<a href={% url 'signup' %}>Create account</a> <a href={% url 'login' %}>Login Again</a><br>
+<h1>Log Out</h1>
+<button type="submit">Logout</button>
+{% endblock %}

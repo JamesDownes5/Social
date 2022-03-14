@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel = "stylesheet" href={% static 'core/style.css' %}>
-    <script src={% static 'core/script.js'%}></script> 
+{% extends "core/base.html" %}
+{% load static %}
 
-    <title>Create Event</title>
-</head>
-<body>
-    <header><a href={% url 'index' %}><img src={% static 'core/logo.png' %} style="width:50px;height: auto"></a><hr></header>
+{% block title %}Create Event{% endblock %}
+{% block imports %}
+<link rel = "stylesheet" href={% static 'core/style.css' %}>
+<script src={% static 'core/script.js'%}></script> 
+{% endblock %}
 
+<!-- Override header -->
+{% block search %}{% endblock %}
+{% block create %}{% endblock %}
+
+{% block content %}
     <h1>Create Event</h1>
 
     <form method="post">
@@ -51,5 +50,4 @@
 
         
     </div>
-</body>
-</html>
+{% endblock %}

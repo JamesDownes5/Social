@@ -1,58 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "core/base.html" %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/89e830680d.js" crossorigin="anonymous"></script>
-    {% load static %}
-    <link rel="stylesheet" href={% static 'core/event.css' %} />
-    <title>{{ event.title }}</title>
-</head>  
-<body>
-    <header>
-        <form action="login.html">
-            <a href={% url 'index' %}><img src={% static 'core/logo2.png' %} style="width:200px;height: auto"></a>
+{% block title %}{{ event.title }}{% endblock %}
+{% block imports %}
+<script src="https://kit.fontawesome.com/89e830680d.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href={% static 'core/event.css' %} />
+{% endblock %}
 
-            <div class="search-box">
-                <input class="search-text" type="text" name="" placeholder="Search events">
-                <a class="search-button" href="#">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </a>
-            </div>
-            <input type="submit" id="login" name="login" value="log in">
-        </form>
-        <hr>
-    </header>
+<!-- Overrides header -->
+{% block search %}{% endblock %}
 
-    <table>
-        <tr>
-            <th>
-                <img src={{ event.image.url }}>
-            </th>
-            <th>
-                <h1>{{ event.title }}</h1>
-                <h3> {{ event.datetime }}
-                    <br>
-                    {{ event.street }}
-                    {{ event.area }}
-                    {{ event.city }}
-                </h3>
-                <p>{{ event.desc }}</p>
-                <button>Register interest/attendance</button>
-                {% comment %} <button>{{ event.tickets }}</button> {% endcomment %}
-            </th>
-        </tr>
-    </table>
-    <hr>
-        
-<a href={{ event.facebook }}><img src={% static 'core/facebook.png' %}
-        style="width:64px;height: 64px;padding: 5px;" /> </a>
-<a href={{ event.instagram }}><img src={% static 'core/instagram.png' %}
-        style="width:64px;height: 64px;padding: 5px;" /> </a>
-<a href={{ event.discord }}><img src={% static 'core/discord.png' %}
-        style="width:64px;height: 64px;padding: 5px;" /> </a>
+{% block content %}
+<table>
+    <tr>
+        <th>
+            <img src={{ event.image.url }}>
+        </th>
+        <th>
+            <h1>{{ event.title }}</h1>
+            <h3> {{ event.datetime }}
+                <br>
+                {{ event.street }}
+                {{ event.area }}
+                {{ event.city }}
+            </h3>
+            <p>{{ event.desc }}</p>
+            <button>Register interest/attendance</button>
+            {% comment %} <button>{{ event.tickets }}</button> {% endcomment %}
+        </th>
+    </tr>
+</table>
+<hr>
+
+<a href={{ event.facebook }}><img src={% static 'core/facebook.png' %} style="width:64px;height: 64px;padding: 5px;" /></a>
+<a href={{ event.instagram }}><img src={% static 'core/instagram.png' %} style="width:64px;height: 64px;padding: 5px;" /></a>
+<a href={{ event.discord }}><img src={% static 'core/discord.png' %} style="width:64px;height: 64px;padding: 5px;" /></a>
 
 <button onclick="copyToClipboard()" style="width: 150px; height: 50px;">Copy Link</button>
 
@@ -67,6 +49,4 @@
         alert("URL Copied.");
     }
 </script>
-
-</body>
-</html>
+{% endblock %}
