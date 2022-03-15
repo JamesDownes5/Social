@@ -1,0 +1,38 @@
+#events-container {
+    max-width: 80em;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2em;
+}
+
+.card {
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 30em;
+    display: flex;
+    flex-direction: column;
+    transition-duration: 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card img {
+    height: 12em;
+    border-radius: 1em 1em 0em 0em;
+    object-fit: cover;
+}
+
+.card div {
+    padding: 1em 1em 0em 1em;
+    margin-bottom: 1em;
+    text-align: justify;
+    overflow: scroll;
+}
+
+.card h3 {
+    margin-top: 0em;
+}
