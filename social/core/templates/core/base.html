@@ -9,7 +9,7 @@
     <title>{% block title %}Social Events{% endblock %}</title>
 
     {% load static %}
-    <link rel="stylesheet" href={% static 'core/header.css' %} />
+    <link rel="stylesheet" href={% static 'core/base.css' %} />
     {% block imports %}{% endblock %}
     {% block head_scripts %}{% endblock %}
 </head>
@@ -24,16 +24,26 @@
     </form>
     {% endblock search %}
     <span>
-        {% block create %}
-        <a href={% url 'create' %} style="margin-right: 1em;">Create an event</a>
-        {% endblock create %}
-        {% block account %}
-        <a href={% url 'login' %}>Login</a>
-        {% endblock account %}
-    </span>
+    {% if user.is_authenticated %}
+        {% block authed_create_link %}
+        <a href={% url 'create' %}>Create an event</a>
+        {% endblock authed_create_link %}
+        {% block authed_account_links %}
+        <a href={% url 'account' %}>Account</a>
+        <a href={% url 'logout' %}>Log Out</a>
+        {% endblock authed_account_links %}
+    {% else %}
+        {% block unauthed_create_link %}
+        <a href={% url 'login' %}>Create an event</a>
+        {% endblock unauthed_create_link %}
+        {% block unauthed_account_links %}
+        <a href={% url 'signup' %}>Sign Up</a>
+        <a href={% url 'login' %}>Log In</a>
+        {% endblock unauthed_account_links %}
+    {% endif %}
     {% endblock header %}
+    </span>
 </header>
-<hr>
 
 {% block content %}{% endblock %}
 </body>
