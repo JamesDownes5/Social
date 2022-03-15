@@ -1,7 +1,12 @@
+body {
+    margin: 0em;
+}
+
 header {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
+    padding: 1em 0em;
 }
 
 header > * {
@@ -13,6 +18,7 @@ header > * {
 header > form {
     flex-grow: 1;
     display: flex;
+    height: 3rem;
 }
 
 header .searchbox {

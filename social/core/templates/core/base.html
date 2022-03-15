@@ -9,7 +9,7 @@
     <title>{% block title %}Social Events{% endblock %}</title>
 
     {% load static %}
-    <link rel="stylesheet" href={% static 'core/header.css' %} />
+    <link rel="stylesheet" href={% static 'core/base.css' %} />
     {% block imports %}{% endblock %}
     {% block head_scripts %}{% endblock %}
 </head>
@@ -33,7 +33,6 @@
     </span>
     {% endblock header %}
 </header>
-<hr>
 
 {% block content %}{% endblock %}
 </body>
