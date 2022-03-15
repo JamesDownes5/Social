@@ -45,7 +45,10 @@
         <div class="slideshow fade" id="slide{{ forloop.counter }}">
             <div class="slide-number">{{ forloop.counter }} / 5</div>
             <img src={{ event.image.url }} style="width:100%">
-            <div class="slide-text">{{ event.title }}</div>
+            <div class="slide-text">
+                <h1>{{ event.title }}</h1>
+                <a href="event/1">Find out more...</a>
+            </div>
         </div>
         {% endif %}
     {% endfor %}
@@ -53,8 +56,6 @@
     <a class="slide-prev">&#10094;</a>
     <a class="slide-next">&#10095;</a>
 </div>
-
-<hr>
 
 <form>
     <input type="text" id="search-body" name="search-body" placeholder="Search...">
