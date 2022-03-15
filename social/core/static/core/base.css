@@ -5,14 +5,9 @@ body {
 header {
     display: flex;
     align-items: stretch;
-    justify-content: space-between;
-    padding: 1em 0em;
-}
-
-header > * {
-    margin: 0em 1em;
-    align-items: center;
-    display: flex;
+    justify-content: space-evenly;
+    gap: 1em; 
+    padding: 1em;
 }
 
 header > form {
