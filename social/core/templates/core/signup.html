@@ -1,34 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel = "stylesheet" href={% static 'core/style.css' %} /> 
-    <title>Sign Up</title>
-</head>
-<body>
+{% extends "core/base.html" %}
+{% load static %}
 
-    <h1>Create Account</h1>
-    <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
-        <div class="content-section">
-            <form method="post">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                    <legend class = "border-bottom mb-4">Sign Up Here</legend>
-                    {{ form.as_p}}
-                </fieldset>
-                <div class = "form-group">
-                    <button class = "btn btn-outline-info" type="submit">Create Account</button>
-                </div>
-            </form>
-            <div class = "border-top pt-3">
-                <small class = "text-muted">
-                    Already Have An Account? <a href={% url 'login' %}>Log In</a>
-                </small>
-            </div>
-            <!--
+{% block title %}Sign Up{% endblock title %}
+{% block imports %}
+<link rel="stylesheet" href={% static 'core/style.css' %} />
+{% endblock %}
+
+{% block content %}
+<h1>Create Account</h1>
+<img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
+<div class="content-section">
+    <form method="post">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Sign Up Here</legend>
+            {{ form.as_p}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Create Account</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Already Have An Account? <a href={% url 'login' %}>Log In</a>
+        </small>
+    </div>
+    <!--
             {% if messages %}
                 {% for message in massages %}
                     <div class = "alert alert-{{ message.tags }}">
@@ -38,6 +35,5 @@
                 {% endfor %}
             {% endif %}
             -->
-        </div>
-</body>
-</html>
+</div>
+{% endblock %}

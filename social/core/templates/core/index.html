@@ -1,105 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "core/base.html" %}
+{% load static %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block imports %}
+<link rel="stylesheet" href={% static 'core/slideshow.css' %} />
+<!-- Import jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
 
-  <!-- Import jquery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- jquery logic -->
-  <script>
+{% block head_scripts %}
+<script>
     $(document).ready(function () {
-      // Focus search box on type
-      $(document).keypress(function (event) {
-        if (!$("#search-body").is(":focus")) {
-          $("#search-body").val(String.fromCharCode(event.which)).focus();
-        }
-      });
-      
-      // Slideshow
-      let slide_index = 0;
-      slide_index = showSlide(slide_index);
+        // Slideshow
+        let slide_index = 0;
+        slide_index = showSlide(slide_index);
 
-      $(".slide-next").click(function () {
-        slide_index = showSlide(slide_index + 1);
-      });
+        $(".slide-next").click(function () {
+            slide_index = showSlide(slide_index + 1);
+        });
 
-      $(".slide-prev").click(function () {
-        slide_index = showSlide(slide_index - 1);
-      });
+        $(".slide-prev").click(function () {
+            slide_index = showSlide(slide_index - 1);
+        });
     });
 
     function showSlide(n) {
-      let slide_index = n;
-      if (n >= $(".slideshow").length) {
-        slide_index = 0;
-      }
-      if (n < 0) {
-        slide_index = $(".slideshow").length - 1;
-      }
-      $(".slideshow").css("display", "none");
-      $(`#slide${slide_index + 1}`).css("display", "block").addClass("active")
-      return slide_index;
+        let slide_index = n;
+        if (n >= $(".slideshow").length) {
+            slide_index = 0;
+        }
+        if (n < 0) {
+            slide_index = $(".slideshow").length - 1;
+        }
+        $(".slideshow").css("display", "none");
+        $(`#slide${slide_index + 1}`).css("display", "block").addClass("active")
+        return slide_index;
     }
-  </script>
+</script>
+{% endblock %}
 
-  {% load static %}
-  <!-- <link rel="stylesheet" href={% static 'core/style.css' %} /> -->
-  <link rel="stylesheet" href={% static 'core/index.css' %} />
-  <link rel="stylesheet" href={% static 'core/slideshow.css' %} />
-  <title>Social Events</title>
-</head>
-</body>
-  <header>
-      <a href={% url 'index' %}><img class="logo" src={% static 'core/logo.png' %}></a>
-    <!-- TODO: form handling -->
-    <form>
-      <input class="searchbox" type="text" name="search-header" placeholder="Search for events...">
-    </form>
-    <a href={% url 'create' %}>Create an event</a>
-    <a href={% url 'login' %}>Login</a>
-  </header>
-  <hr>
-  
-  <div id="slideshow-container">
+{% block content %}
+<div id="slideshow-container">
     {% for event in event_list %}
     {% if forloop.counter <= 5 %}
-      <div class="slideshow fade" id="slide{{ forloop.counter }}">
+    <div class="slideshow fade" id="slide{{ forloop.counter }}">
         <div class="slide-number">{{ forloop.counter }} / 5</div>
         <img src={{ event.image.url }} style="width:100%">
         <div class="slide-text">{{ event.title }}</div>
-      </div>
+    </div>
     {% endif %}
     {% endfor %}
-  </div>
+</div>
 
-    <a class="slide-prev">&#10094;</a>
-    <a class="slide-next">&#10095;</a>
-  </div>
+<a class="slide-prev">&#10094;</a>
+<a class="slide-next">&#10095;</a>
+</div>
 
-  <hr>
+<hr>
 
-  <form>
+<form>
     <input type="text" id="search-body" name="search-body" placeholder="Search...">
     <input type="button" id="login" name="login" value="Sort by"></br>
     <input type="text" id="filter" name="filter" placeholder="Filter...">
-  </form>
+</form>
 
 {% for event in page_obj %}
-  <div id="event{{ forloop.counter }}">
+<div id="event{{ forloop.counter }}">
     <img src={{ event.image.url }} style="width:100%">
     <div>{{ event.title }}</div>
-  </div>
+</div>
 {% endfor %}
 
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -107,12 +82,9 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
-  <!-- TODO: Forward and back pagination buttons here -->
-</body>
-
-</html>
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Social Events{% endblock %}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href={% static 'core/header.css' %} />
+    {% block imports %}{% endblock %}
+    {% block head_scripts %}{% endblock %}
+</head>
+
+</body>
+<header>
+    {% block header %}
+    <a href={% url 'index' %}><img class="logo" src={% static 'core/logo.png' %}></a>
+    {% block search %}
+    <form>
+        <input class="searchbox" type="text" name="search-header" placeholder="Search for events...">
+    </form>
+    {% endblock search %}
+    <span>
+        {% block create %}
+        <a href={% url 'create' %} style="margin-right: 1em;">Create an event</a>
+        {% endblock create %}
+        {% block account %}
+        <a href={% url 'login' %}>Login</a>
+        {% endblock account %}
+    </span>
+    {% endblock header %}
+</header>
+<hr>
+
+{% block content %}{% endblock %}
+</body>
+
+</html>
