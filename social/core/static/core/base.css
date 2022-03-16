@@ -12,7 +12,6 @@ header {
 
 header > form {
     flex-grow: 1;
-    display: flex;
     height: 3rem;
 }
 
@@ -26,9 +25,10 @@ header .searchbox {
     font-size: 15px;
 }
 
-header a {
+header > * {
     align-items: center;
     display: flex;
+    gap: 1em;
 }
 
 header .logo {
