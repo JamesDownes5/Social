@@ -3,6 +3,7 @@
 
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/slideshow.css' %} />
+<link rel="stylesheet" href={% static 'core/index.css' %} />
 <link rel="stylesheet" href={% static 'core/card.css' %} />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
@@ -11,8 +12,11 @@
 <script>
     $(document).ready(function () {
         // Slideshow
-        let slide_index = 0;
-        slide_index = showSlide(slide_index);
+        let slide_index = showSlide(0);
+
+        setInterval(() => {
+            slide_index = showSlide(slide_index + 1);
+        }, 10000);
 
         $(".slide-next").click(function () {
             slide_index = showSlide(slide_index + 1);
@@ -26,6 +30,11 @@
             let origin = window.location.origin;
             window.location.href = origin + $(this).attr("data-link");
         });
+
+        // Insert search terms onto page
+        let url = new URL(window.location.href);
+        $("#search-body").val(url.searchParams.get("search"));
+        $(`input[value="${url.searchParams.get("sort")}"]`).attr("checked", "checked");
 
         // Event links
         $(".card").click(function () {
@@ -43,7 +52,7 @@
             slide_index = $(".slideshow").length - 1;
         }
         $(".slideshow").css("display", "none");
-        $(`#slide${slide_index + 1}`).css("display", "block").addClass("active")
+        $(`#slide${slide_index + 1}`).css("display", "block");
         return slide_index;
     }
 </script>
@@ -52,7 +61,8 @@
 {% block content %}
 <div id="slideshow-container">
     {% for event in event_list %}
-    {% if forloop.counter <= 5 %} <div class="slideshow fade" id="slide{{ forloop.counter }}">
+    {% if forloop.counter <= 5 %}
+    <div class="slideshow fade" id="slide{{ forloop.counter }}">
         <img src={{ event.image.url }}>
         <div class="slide-text-container" data-link="/event/{{ event.id }}">
             <div class="slide-text">
@@ -60,20 +70,35 @@
                 <a href="event/{{ event.id }}">Find out more...</a>
             </div>
         </div>
-</div>
-{% endif %}
-{% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
 
-<div class="slide-button-container">
-    <a class="slide-prev">&#10094;</a>
-    <a class="slide-next">&#10095;</a>
-</div>
+    <div class="slide-button-container">
+        <a class="slide-prev">&#10094;</a>
+        <a class="slide-next">&#10095;</a>
+    </div>
 </div>
 
-<form>
-    <input type="text" id="search-body" name="search-body" placeholder="Search...">
-    <input type="button" id="login" name="login" value="Sort by"></br>
-    <input type="text" id="filter" name="filter" placeholder="Filter...">
+<form class="search-form">
+    <input type="text" id="search-body" class="searchbox" name="search" placeholder="Search for events...">
+    <fieldset>
+        <legend>Sort by</legend>
+        <input type="radio" id="sort-choice-0" name="sort" value="name-asc" />
+        <label for="sort-choice-0">Name - A &#8594 Z</label>
+        <input type="radio" id="sort-choice-1" name="sort" value="name-desc" />
+        <label for="sort-choice-1">Name - Z &#8594 A</label>
+
+        <input type="radio" id="sort-choice-2" name="sort" value="date-asc" />
+        <label for="sort-choice-2">Date - Soonest first</label>
+        <input type="radio" id="sort-choice-3" name="sort" value="date-desc" />
+        <label for="sort-choice-3">Date - Latest first</label>
+
+        <input type="radio" id="sort-choice-4" name="sort" value="interest-asc" />
+        <label for="sort-choice-4">Interest - High &#8594 Low</label>
+        <input type="radio" id="sort-choice-5" name="sort" value="interest-desc" />
+        <label for="sort-choice-5">Interest - Low &#8594 High</label>
+    </fieldset>
 </form>
 
 <div id="events-container">
