@@ -36,7 +36,7 @@ header a:hover {
     background-color: rgba(200, 200, 200, 0.3);
 }
 
-header .searchbox {
+.searchbox {
     flex-grow: 1;
     height: 100%;
     padding: 0em 1em;
@@ -52,11 +52,11 @@ header .searchbox {
     padding-left: 3rem;
 }
 
-header .searchbox:focus {
+.searchbox:focus {
     background-color: #dddddd;
 }
 
-header .searchbox:hover {
+.searchbox:hover {
     background-color: #dddddd;
 }
 
