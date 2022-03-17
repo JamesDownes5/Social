@@ -3,7 +3,7 @@
 
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/slideshow.css' %} />
-<link rel="stylesheet" href={% static 'core/card.css' %}/> 
+<link rel="stylesheet" href={% static 'core/card.css' %} />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
 
@@ -41,20 +41,22 @@
 {% block content %}
 <div id="slideshow-container">
     {% for event in event_list %}
-        {% if forloop.counter <= 5 %} 
-        <div class="slideshow fade" id="slide{{ forloop.counter }}">
-            <div class="slide-number">{{ forloop.counter }} / 5</div>
-            <img src={{ event.image.url }} style="width:100%">
+    {% if forloop.counter <= 5 %} <div class="slideshow fade" id="slide{{ forloop.counter }}">
+        <img src={{ event.image.url }}>
+        <div class="slide-text-container">
             <div class="slide-text">
                 <h1>{{ event.title }}</h1>
                 <a href="event/1">Find out more...</a>
             </div>
         </div>
-        {% endif %}
-    {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
 
+<div class="slide-button-container">
     <a class="slide-prev">&#10094;</a>
     <a class="slide-next">&#10095;</a>
+</div>
 </div>
 
 <form>
@@ -69,9 +71,9 @@
         <img src={{ event.image.url }} style="width:100%">
         <div>
             <h3>{{ event.title }}</h6>
-            <p>{{ event.datetime }}</p>
-            <p>{{ event.street }}</p>
-            <p>{{ event.desc }}</p>
+                <p>{{ event.datetime }}</p>
+                <p>{{ event.street }}</p>
+                <p>{{ event.desc }}</p>
         </div>
     </div>
     {% endfor %}
