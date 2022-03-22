@@ -8,61 +8,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
 
-{% block head_scripts %}
-<script>
-    $(document).ready(function () {
-        // Slideshow
-        let slide_index = showSlide(0);
-
-        setInterval(() => {
-            slide_index = showSlide(slide_index + 1);
-        }, 10000);
-
-        $(".slide-next").click(function () {
-            slide_index = showSlide(slide_index + 1);
-        });
-
-        $(".slide-prev").click(function () {
-            slide_index = showSlide(slide_index - 1);
-        });
-
-        $(".slide-text-container").click(function () {
-            let origin = window.location.origin;
-            window.location.href = origin + $(this).attr("data-link");
-        });
-
-        // Insert search terms onto page
-        let url = new URL(window.location.href);
-        let search_term = url.searchParams.get("search")
-        $("#search-body").val(search_term);
-        $(`input[value="${url.searchParams.get("sort")}"]`).attr("checked", "checked");
-        console.log(search_term);
-        if (search_term) {
-            document.querySelector(".search-form").scrollIntoView();
-        }
-
-        // Event links
-        $(".card").click(function () {
-            let origin = window.location.origin;
-            window.location.href = origin + $(this).attr("data-link");
-        });
-    });
-
-    function showSlide(n) {
-        let slide_index = n;
-        if (n >= $(".slideshow").length) {
-            slide_index = 0;
-        }
-        if (n < 0) {
-            slide_index = $(".slideshow").length - 1;
-        }
-        $(".slideshow").css("display", "none");
-        $(`#slide${slide_index + 1}`).css("display", "block");
-        return slide_index;
-    }
-</script>
-{% endblock %}
-
 {% block content %}
 <div id="slideshow-container">
     {% for event in event_list %}
@@ -79,9 +24,9 @@
     {% endif %}
     {% endfor %}
 
-    <div class="slide-button-container">
-        <a class="slide-prev">&#10094;</a>
-        <a class="slide-next">&#10095;</a>
+    <div id="slide-button-container">
+        <a id="slide-prev">&#10094;</a>
+        <a id="slide-next">&#10095;</a>
     </div>
 </div>
 
@@ -141,4 +86,6 @@
         {% endif %}
     </span>
 </div>
+
+<script src={% static 'core/index.js' %}></script>
 {% endblock %}
