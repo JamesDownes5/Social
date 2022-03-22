@@ -14,7 +14,7 @@
   width: 100%;
 }
 
-.slide-button-container {
+#slide-button-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,7 +24,7 @@
   width: 100%;
 }
 
-.slide-prev, .slide-next {
+#slide-prev, #slide-next {
   cursor: pointer;
   padding: 1rem;
   color: white;
@@ -35,12 +35,12 @@
   background-color: rgba(0,0,0,0.2);
 }
 
-.slide-next {
+#slide-next {
   right: 0;
   border-radius: 0.5rem 0 0 0.5rem;
 }
 
-.slide-prev:hover, .slide-next:hover {
+#slide-prev:hover, #slide-next:hover {
   background-color: rgba(0,0,0,0.6);
 }
 
