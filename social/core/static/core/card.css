@@ -31,7 +31,7 @@
     padding: 1em 1em 0em 1em;
     margin-bottom: 1em;
     text-align: justify;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .card h3 {
