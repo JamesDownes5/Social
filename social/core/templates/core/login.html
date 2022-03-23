@@ -3,7 +3,7 @@
 
 {% block title %}Log In{% endblock %}
 {% block imports %}
-<link rel="stylesheet" href={% static 'core/style.css' %} />
+<link rel="stylesheet" href={% static 'core/charles.css' %} />
 {% endblock %}
 
 <!-- Overrides header -->
@@ -11,16 +11,18 @@
 
 {% block content %}
 <h1>Log In</h1>
-<form method="post">
     <!--
         <input type="text" id="email" name="email" placeholder="email"><br>
         <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
         -->
+    <div class="content-section">
+        <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
     <a href={% url 'signup' %}>Create account</a> <a href={% url 'index' %}>Continue as guest</a><br>
     <button type="submit">Login</button>
     <!-- <input type="submit" id="login" name="login" value="log in"> -->
 </form>
+    </div>
 <script src="https://unpkg.com/vue@3"></script>
 {% endblock %}

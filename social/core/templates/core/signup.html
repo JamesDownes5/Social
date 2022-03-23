@@ -3,19 +3,15 @@
 
 {% block title %}Sign Up{% endblock title %}
 {% block imports %}
-<link rel="stylesheet" href={% static 'core/style.css' %} />
+<link rel="stylesheet" href={% static 'core/charles.css' %} />
 {% endblock %}
 
 {% block content %}
 <h1>Create Account</h1>
-<img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
 <div class="content-section">
     <form method="post">
         {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Sign Up Here</legend>
-            {{ form.as_p}}
-        </fieldset>
+            {{ form }}
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Create Account</button>
         </div>
