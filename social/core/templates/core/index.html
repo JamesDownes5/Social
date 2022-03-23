@@ -3,11 +3,7 @@
 
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/slideshow.css' %} />
-<<<<<<< HEAD
-<link rel="stylesheet" href={% static 'core/card.css' %}/> 
-=======
 <link rel="stylesheet" href={% static 'core/card.css' %}/>
->>>>>>> User
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock %}
 
@@ -48,9 +44,9 @@
         {% if forloop.counter <= 5 %} 
         <div class="slideshow fade" id="slide{{ forloop.counter }}">
             <div class="slide-number">{{ forloop.counter }} / 5</div>
-            <img src={{ event.image.url }} style="width:100%">
+            <img src={{ ssEvent.image.url }} style="width:100%">
             <div class="slide-text">
-                <h1>{{ event.title }}</h1>
+                <h1>{{ ssEvent.title }}</h1>
                 <a href="event/1">Find out more...</a>
             </div>
         </div>
