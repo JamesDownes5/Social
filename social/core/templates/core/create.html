@@ -13,13 +13,14 @@
 
 {% block content %}
     <h1>Create Event</h1>
-
+    <div class="content-section">
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <button type="submit">Preview</button>
         <!-- <input type="submit" id="preview" name="preview" value="preview"> -->
     </form>
+    </div>
     {% comment %} <div class="border">
 
         <h1>Create Event</h1>
