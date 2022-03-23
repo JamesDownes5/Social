@@ -22,8 +22,21 @@ class Event(models.Model):
         return self.title
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    img = models.ImageField(default= "default.png", upload_to='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    friends = models.ManyToManyField(User, related_name="friends",blank=True)
+    img = models.ImageField(default= "core/user.jpg", upload_to='profile_pics')
+
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username}'
+
+
+class Friend_Request(models.Model):
+    from_user = models.ForeignKey(Profile, related_name='from_user', on_delete= models.CASCADE)
+    # from_usr = models.ForeignKey(Profile, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(Profile, related_name='to_user',on_delete=models.CASCADE)
+    # to_usr = models.ForeignKey(Profile, related_name='to_user', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.from_user} to {self.to_user}'
+

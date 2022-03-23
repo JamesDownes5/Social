@@ -13,5 +13,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name="core/login.html"), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name="core/logout.html"), name='logout'),
     path('account/', views.account, name='account'),
+    path('send_friend_request/<int:userID>/', views.send_friend_request, name='send_friend_request'),
+    path('accept_friend_request/<int:requestid>/', views.accept_friend_request, name='accept_friend_request'),
+    path('decline_friend_request/<int:requestid>/', views.decline_friend_request, name='decline_friend_request'),
+
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
