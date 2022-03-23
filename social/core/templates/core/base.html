@@ -9,18 +9,23 @@
     <title>{% block title %}Social Events{% endblock %}</title>
 
     {% load static %}
-    <link rel="stylesheet" href={% static 'core/base.css' %} />
     {% block imports %}{% endblock %}
+    <!-- base.css has highest priority -->
+    <link rel="stylesheet" href={% static 'core/base.css' %} />
     {% block head_scripts %}{% endblock %}
 </head>
 
 </body>
 <header>
     {% block header %}
-    <a href={% url 'index' %}><img class="logo" src={% static 'core/logo.png' %}></a>
+    <span>
+        <a href={% url 'index' %}>
+            <img class="logo" src={% static 'core/logo.png' %}>
+        </a>
+    </span>
     {% block search %}
     <form>
-        <input class="searchbox" type="text" name="search-header" placeholder="Search for events...">
+        <input class="searchbox" type="text" name="search" placeholder="Search for events...">
     </form>
     {% endblock search %}
     <span>
@@ -41,8 +46,8 @@
         <a href={% url 'login' %}>Log In</a>
         {% endblock unauthed_account_links %}
     {% endif %}
-    {% endblock header %}
     </span>
+    {% endblock header %}
 </header>
 
 {% block content %}{% endblock %}
