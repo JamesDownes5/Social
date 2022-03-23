@@ -3,99 +3,87 @@
 
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/slideshow.css' %} />
-<<<<<<< HEAD
-<link rel="stylesheet" href={% static 'core/card.css' %}/> 
-=======
-<link rel="stylesheet" href={% static 'core/card.css' %}/>
->>>>>>> User
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{% endblock %}
-
-{% block head_scripts %}
-<script>
-    $(document).ready(function () {
-        // Slideshow
-        let slide_index = 0;
-        slide_index = showSlide(slide_index);
-
-        $(".slide-next").click(function () {
-            slide_index = showSlide(slide_index + 1);
-        });
-
-        $(".slide-prev").click(function () {
-            slide_index = showSlide(slide_index - 1);
-        });
-    });
-
-    function showSlide(n) {
-        let slide_index = n;
-        if (n >= $(".slideshow").length) {
-            slide_index = 0;
-        }
-        if (n < 0) {
-            slide_index = $(".slideshow").length - 1;
-        }
-        $(".slideshow").css("display", "none");
-        $(`#slide${slide_index + 1}`).css("display", "block").addClass("active")
-        return slide_index;
-    }
-</script>
+<link rel="stylesheet" href={% static 'core/index.css' %} />
+<link rel="stylesheet" href={% static 'core/card.css' %} />
 {% endblock %}
 
 {% block content %}
 <div id="slideshow-container">
     {% for event in event_list %}
-        {% if forloop.counter <= 5 %} 
-        <div class="slideshow fade" id="slide{{ forloop.counter }}">
-            <div class="slide-number">{{ forloop.counter }} / 5</div>
-            <img src={{ event.image.url }} style="width:100%">
+    {% if forloop.counter <= 5 %}
+    <div class="slideshow fade" id="slide{{ forloop.counter }}">
+        <img src={{ event.image.url }}>
+        <div class="slide-text-container" data-link="/event/{{ event.id }}">
             <div class="slide-text">
                 <h1>{{ event.title }}</h1>
-                <a href="event/1">Find out more...</a>
+                <a href="event/{{ event.id }}">Find out more...</a>
             </div>
         </div>
-        {% endif %}
+    </div>
+    {% endif %}
     {% endfor %}
 
-    <a class="slide-prev">&#10094;</a>
-    <a class="slide-next">&#10095;</a>
+    <div id="slide-button-container">
+        <a id="slide-prev">&#10094;</a>
+        <a id="slide-next">&#10095;</a>
+    </div>
 </div>
 
-<form>
-    <input type="text" id="search-body" name="search-body" placeholder="Search...">
-    <input type="button" id="login" name="login" value="Sort by"></br>
-    <input type="text" id="filter" name="filter" placeholder="Filter...">
+<form class="search-form">
+    <input type="text" id="search-body" class="searchbox" name="search" placeholder="Search for events...">
+    <fieldset>
+        <legend>Sort by</legend>
+        <input type="radio" id="sort-choice-0" name="sort" value="name-asc" />
+        <label for="sort-choice-0">Name - A &#8594 Z</label>
+        <input type="radio" id="sort-choice-1" name="sort" value="name-desc" />
+        <label for="sort-choice-1">Name - Z &#8594 A</label>
+
+        <input type="radio" id="sort-choice-2" name="sort" value="date-asc" />
+        <label for="sort-choice-2">Date - Soonest first</label>
+        <input type="radio" id="sort-choice-3" name="sort" value="date-desc" />
+        <label for="sort-choice-3">Date - Latest first</label>
+
+        <input type="radio" id="sort-choice-4" name="sort" value="interest-asc" />
+        <label for="sort-choice-4">Interest - High &#8594 Low</label>
+        <input type="radio" id="sort-choice-5" name="sort" value="interest-desc" />
+        <label for="sort-choice-5">Interest - Low &#8594 High</label>
+    </fieldset>
 </form>
 
 <div id="events-container">
     {% for event in page_obj %}
-    <div id="event{{ forloop.counter }}" class="card">
+    <div class="card" data-link="/event/{{ event.id }}">
         <img src={{ event.image.url }} style="width:100%">
         <div>
             <h3>{{ event.title }}</h6>
-            <p>{{ event.datetime }}</p>
-            <p>{{ event.street }}</p>
-            <p>{{ event.desc }}</p>
+                <p>{{ event.datetime }}</p>
+                <p>{{ event.street }}</p>
+                <p>{{ event.desc }}</p>
+                <a href="event/{{ event.id }}">Find out more...</a>
         </div>
     </div>
     {% endfor %}
 </div>
 
 <div class="pagination">
-    <span class="step-links">
+        <span style="justify-content: flex-end;">
         {% if page_obj.has_previous %}
         <a href="?page=1">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; previous</a>
         {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
         </span>
 
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        <span>
         {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
         <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
+
+<script src={% static 'core/index.js' %}></script>
 {% endblock %}
