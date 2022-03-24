@@ -3,51 +3,21 @@
 
 {% block title %}Create Event{% endblock %}
 {% block imports %}
-<link rel = "stylesheet" href={% static 'core/style.css' %}>
-<script src={% static 'core/script.js'%}></script> 
+<link rel="stylesheet" href={% static 'core/charles.css' %}>
 {% endblock %}
 
 <!-- Override header -->
 {% block search %}{% endblock %}
-{% block create %}{% endblock %}
+{% block authed_create_link %}{% endblock %}
+{% block unauthed_create_link %}{% endblock %}
 
 {% block content %}
-    <h1>Create Event</h1>
-
+<h1>Create Event</h1>
+<div class="content-section">
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create</button>
-        <!-- <input type="submit" id="preview" name="preview" value="preview"> -->
+        {{ form }}
+        <button type="submit">Preview</button>
     </form>
-    {% comment %} <div class="border">
-
-        <h1>Create Event</h1>
-
-        <form action="event.html">
-            <input type="text" id="title" name="title" placeholder="Title">
-            <p><input type="text" id="location" name="location" placeholder="Location"></p>
-            <p><input type="text" id="time" name="time" placeholder="Time"></p>
-            <p><input type="text" id="tickets" name="tickets" placeholder="Tickets"></p>
-            <p><input type="text" id="socials" name="socials" placeholder="Socials"></p>
-            <p><input type="text" id="tags" name="tags" placeholder="Tags"></p>
-            <p><input type="text" id="description" name="description" placeholder="Description"></p>
-
-            <p>
-                <input type="file" id="image_input" accept="image/png, image/jpg">
-
-            </p>
-
-            <a href={% url 'index' %}>
-                <input type="button" value="Cancel">
-            </a>
-            <a href={% url 'preview' %}>
-                <input type="button" value="Preview">
-            </a> {% endcomment %}
-
-        
-        </form>
-
-        
-    </div>
+</div>
 {% endblock %}
