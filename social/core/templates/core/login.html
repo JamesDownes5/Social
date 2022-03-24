@@ -11,18 +11,13 @@
 
 {% block content %}
 <h1>Log In</h1>
-    <!--
-        <input type="text" id="email" name="email" placeholder="email"><br>
-        <input type="text" id="psswd" name="psswd" placeholder="Password"><br>
-        -->
-    <div class="content-section">
-        <form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <a href={% url 'signup' %}>Create account</a> <a href={% url 'index' %}>Continue as guest</a><br>
-    <button type="submit">Login</button>
-    <!-- <input type="submit" id="login" name="login" value="log in"> -->
-</form>
-    </div>
-<script src="https://unpkg.com/vue@3"></script>
+<div class="content-section">
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <a href={% url 'signup' %}>Create account</a>
+        <a href={% url 'index' %}>Continue as guest</a>
+        <button type="submit">Login</button>
+    </form>
+</div>
 {% endblock %}
