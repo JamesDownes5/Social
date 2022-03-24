@@ -5,39 +5,58 @@ from .forms import EventForm
 from .models import Event, Friend_Request
 from .forms import *
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from .filters import FriendFilter
+from django.urls import reverse_lazy
+
+# class IndexView(generic.ListView):
+#     template_name = 'core/index.html'
+#     model = Event
+#     paginate_by = 9
+
+#     def get_queryset(self):
+#         return Event.objects.order_by('attendance')
 
 class IndexView(generic.ListView):
     template_name = 'core/index.html'
     model = Event
     paginate_by = 9
 
-    def get_queryset(self):
-        return Event.objects.order_by('attendance')
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+
+        context['ssEvent'] = Event.objects.order_by('attendance')
+        context['event'] = Event.objects.order_by('attendance')
+    
+        return context
+
+
+
+# def index(request):
+
+#     slideshowEvent = Event.objects.order_by('attendance')[:5]
+
+#     # event = Event.objects.all()
+#     # paginator = Paginator(event, 9)
+#     # page_number = request.GET.get('page')
+#     # page_obj = paginator.get_page(page_number)
+#     context = {"event": slideshowEvent}
+
+#     return render(request, "core/index.html", context)
 
 class EventView(generic.DetailView):
     model = Event
     template_name = 'core/event.html'
 
-class EventCreateView(generic.FormView):
+class EventCreateView(generic.CreateView):
     model = Event
     template_name = 'core/create.html'
     form_class = EventForm
-    success_url = 'event/'
+    success_url = reverse_lazy('index')
 
-class EventPreviewView(generic.CreateView):
+class EventEditView(generic.UpdateView):
     model = Event
-    template_name = 'core/preview.html'
+    template_name = 'create.html'
 
-# class EventUpdateView(generic.UpdateView):
-#     model = Event
-#     template_name = 'edit.html'
-
-# class EventDeleteView(generic.DeleteView):
-#     model = Event
-#     template_name = 'delete.html'
-#     success_url =
 
 def signup(request):
     if request.method == "POST":
