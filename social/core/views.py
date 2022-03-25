@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
-from django.views import generic
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .forms import EventForm
 from .models import Event, Friend_Request
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .filters import FriendFilter
-from django.urls import reverse_lazy
+from django.contrib.auth.mixins import UserPassesTestMixin
 
-class IndexView(generic.ListView):
+class IndexView(ListView):
     template_name = 'core/index.html'
     model = Event
     paginate_by = 9
@@ -39,27 +39,30 @@ class IndexView(generic.ListView):
         context['slideshow_event_list'] = Event.objects.order_by('-attendance')[:5]
         return context
 
-class EventView(generic.DetailView):
+class EventView(DetailView):
     model = Event
     template_name = 'core/event.html'
 
     def post(self, request):
         if 'attendance' in request.POST:
-            Event.attendance
+            if request.POST.get['attendance'] == True:
+                Event.attendance += 1
+            elif request.POST.get['attendance'] == False:
+                Event.attendance -= 1
 
 
-class EventCreateView(generic.CreateView):
+class EventCreateView(CreateView):
     model = Event
     template_name = 'core/create.html'
     form_class = EventForm
-    success_url = reverse_lazy('index')
 
-
-class EventEditView(generic.UpdateView):
+class EventEditView(UpdateView, UserPassesTestMixin):
     model = Event
     template_name = 'core/create.html'
     form_class = EventForm
-    success_url = reverse_lazy('index')
+
+    def test_func(self):
+        return self.request.user == Event.user
 
 
 def signup(request):

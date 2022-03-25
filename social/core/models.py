@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
@@ -17,9 +18,17 @@ class Event(models.Model):
     instagram = models.URLField(blank=True)
     discord = models.URLField(blank=True)
     attendance = models.IntegerField(default=0) # editable=False
+    # user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user", default='admin')
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('event', kwargs={'pk': self.pk})
+
+# class Attendance(models.Model):
+#     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
