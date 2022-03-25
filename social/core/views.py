@@ -8,44 +8,45 @@ from django.contrib.auth.decorators import login_required
 from .filters import FriendFilter
 from django.urls import reverse_lazy
 
-# class IndexView(generic.ListView):
-#     template_name = 'core/index.html'
-#     model = Event
-#     paginate_by = 9
-
-#     def get_queryset(self):
-#         return Event.objects.order_by('attendance')
-
 class IndexView(generic.ListView):
     template_name = 'core/index.html'
     model = Event
     paginate_by = 9
 
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
+    def get_queryset(self):
+        if 'search' and 'sort' in self.request.GET:
+            query = self.request.GET.get('search')
+            sort_by = self.request.GET.get('sort')
+            object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+            return object_list
 
-        context['ssEvent'] = Event.objects.order_by('attendance')
-        context['event'] = Event.objects.order_by('attendance')
-    
+        elif 'search' in self.request.GET:
+            query = self.request.GET.get('search')
+            object_list = Event.objects.filter(title__icontains=(query))
+            return object_list
+
+        elif 'sort' in self.request.GET:
+            sort_by = self.request.GET.get('sort')
+            object_list = Event.objects.order_by(sort_by)
+            return object_list
+
+        else:
+            object_list = Event.objects.all()
+            return object_list
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(IndexView, self).get_context_data(*args, **kwargs)
+        context['slideshow_event_list'] = Event.objects.order_by('-attendance')[:5]
         return context
-
-
-
-# def index(request):
-
-#     slideshowEvent = Event.objects.order_by('attendance')[:5]
-
-#     # event = Event.objects.all()
-#     # paginator = Paginator(event, 9)
-#     # page_number = request.GET.get('page')
-#     # page_obj = paginator.get_page(page_number)
-#     context = {"event": slideshowEvent}
-
-#     return render(request, "core/index.html", context)
 
 class EventView(generic.DetailView):
     model = Event
     template_name = 'core/event.html'
+
+    def post(self, request):
+        if 'attendance' in request.POST:
+            Event.attendance
+
 
 class EventCreateView(generic.CreateView):
     model = Event
@@ -55,7 +56,9 @@ class EventCreateView(generic.CreateView):
 
 class EventEditView(generic.UpdateView):
     model = Event
-    template_name = 'create.html'
+    template_name = 'core/create.html'
+    form_class = EventForm
+    success_url = reverse_lazy('index')
 
 
 def signup(request):
