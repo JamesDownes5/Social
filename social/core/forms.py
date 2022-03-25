@@ -12,7 +12,6 @@ class EventForm(forms.ModelForm):
         fields = ['title', 'image', 'datetime', 'street', 'area', 'city',
                   'desc', 'ticket', 'facebook', 'instagram', 'discord']
         widgets = {'title': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Title'}),
-                #    'image': forms.ImageField(),
                    'datetime': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
                    'street': forms.TextInput(attrs={'placeholder': 'Address'}),
                    'area': forms.TextInput(attrs={'placeholder': 'Area'}),
