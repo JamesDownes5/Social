@@ -3,47 +3,37 @@
 
 {% block title %}{{ event.title }}{% endblock %}
 {% block imports %}
-<script src="https://kit.fontawesome.com/89e830680d.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href={% static 'core/event.css' %} />
 {% endblock %}
 
 {% block content %}
-<table>
-    <tr>
-        <th>
-            <img src={{ event.image.url }}>
-        </th>
-        <th>
-            <h1>{{ event.title }}</h1>
-            <h3> {{ event.datetime }}
-                <br>
-                {{ event.street }}
-                {{ event.area }}
-                {{ event.city }}
-            </h3>
-            <p>{{ event.desc }}</p>
-            <button>Register interest/attendance</button>
-            {% comment %} <button>{{ event.tickets }}</button> {% endcomment %}
-        </th>
-    </tr>
-</table>
-<hr>
+<div id="event-container">
+    <img src={{ event.image.url }} id="event-img">
+    <span>
+        <h1>{{ event.title }}</h1>
+        <h3>{{ event.datetime }}</h3>
+        <h5>
+            {{ event.street }}
+            {{ event.area }}
+            {{ event.city }}
+        </h5>
+        <p>{{ event.desc }}</p>
 
-<a href={{ event.facebook }}><img src={% static 'core/facebook.png' %} style="width:64px;height: 64px;padding: 5px;"></a>
-<a href={{ event.instagram }}><img src={% static 'core/instagram.png' %} style="width:64px;height: 64px;padding: 5px;"></a>
-<a href={{ event.discord }}><img src={% static 'core/discord.png' %} style="width:64px;height: 64px;padding: 5px;"></a>
+        {% if event.ticket %}
+        <p>
+            <a href="{{ event.ticket }}">Get tickets here</a>
+        </p>
+        {% endif %}
+        <button>Register interest</button>
+    </span>
+</div>
 
-<button onclick="copyToClipboard()" style="width: 150px; height: 50px;">Copy Link</button>
+<div id="links">
+    <a href={{ event.facebook }}><img src={% static 'core/facebook.png' %}></a>
+    <a href={{ event.instagram }}><img src={% static 'core/instagram.png' %}></a>
+    <a href={{ event.discord }}><img src={% static 'core/discord.png' %}></a>
+    <button id="copy-button">Copy Link</button>
+</div>
 
-<script>
-    function copyToClipboard(text) {
-        var inputc = document.body.appendChild(document.createElement("input"));
-        inputc.value = window.location.href;
-        inputc.focus();
-        inputc.select();
-        document.execCommand('copy');
-        inputc.parentNode.removeChild(inputc);
-        alert("URL Copied.");
-    }
-</script>
+<script src={% static 'core/event.js' %}></script>
 {% endblock %}
