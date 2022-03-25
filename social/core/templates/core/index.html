@@ -30,22 +30,22 @@
 </div>
 
 <form class="search-form">
-    <input type="text" id="search-body" class="searchbox" name="search" placeholder="Search for events...">
+    <input type="text" id="search-body" class="searchbox" name="search" value="search" placeholder="Search for events...">
     <fieldset>
         <legend>Sort by</legend>
-        <input type="radio" id="sort-choice-0" name="sort" value="name-asc" />
+        <input type="radio" id="sort-choice-0" name="sort" value="title" />
         <label for="sort-choice-0">Name - A &#8594 Z</label>
-        <input type="radio" id="sort-choice-1" name="sort" value="name-desc" />
+        <input type="radio" id="sort-choice-1" name="sort" value="-title" />
         <label for="sort-choice-1">Name - Z &#8594 A</label>
 
-        <input type="radio" id="sort-choice-2" name="sort" value="date-asc" />
+        <input type="radio" id="sort-choice-2" name="sort" value="datetime" />
         <label for="sort-choice-2">Date - Soonest first</label>
-        <input type="radio" id="sort-choice-3" name="sort" value="date-desc" />
+        <input type="radio" id="sort-choice-3" name="sort" value="-datetime" />
         <label for="sort-choice-3">Date - Latest first</label>
 
-        <input type="radio" id="sort-choice-4" name="sort" value="interest-asc" />
+        <input type="radio" id="sort-choice-4" name="sort" value="-attendance" checked/>
         <label for="sort-choice-4">Interest - High &#8594 Low</label>
-        <input type="radio" id="sort-choice-5" name="sort" value="interest-desc" />
+        <input type="radio" id="sort-choice-5" name="sort" value="attendance" />
         <label for="sort-choice-5">Interest - Low &#8594 High</label>
     </fieldset>
 </form>

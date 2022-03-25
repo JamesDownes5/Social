@@ -54,6 +54,7 @@ class EventCreateView(generic.CreateView):
     form_class = EventForm
     success_url = reverse_lazy('index')
 
+
 class EventEditView(generic.UpdateView):
     model = Event
     template_name = 'core/create.html'
