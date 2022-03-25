@@ -9,7 +9,7 @@
 
 {% block content %}
 <div id="slideshow-container">
-    {% for event in event_list %}
+    {% for event in slideshow_event_list %}
     {% if forloop.counter <= 5 %}
     <div class="slideshow fade" id="slide{{ forloop.counter }}">
         <img src={{ event.image.url }}>

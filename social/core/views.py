@@ -34,6 +34,11 @@ class IndexView(generic.ListView):
             object_list = Event.objects.all()
             return object_list
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(IndexView, self).get_context_data(*args, **kwargs)
+        context['slideshow_event_list'] = Event.objects.order_by('-attendance')[:5]
+        return context
+
 class EventView(generic.DetailView):
     model = Event
     template_name = 'core/event.html'

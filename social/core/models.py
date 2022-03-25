@@ -6,12 +6,12 @@ from django.contrib.auth.models import User
 ##TODO Remove blank verbose field and work out how to remove from creation form
 class Event(models.Model):
     title = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='event')
-    datetime = models.DateTimeField(blank=True)
+    image = models.ImageField(default='fireworks2.jpg', upload_to='event')
+    datetime = models.DateTimeField()
     street = models.CharField(max_length=50, blank=True)
     area = models.CharField(max_length=20, blank=True)
     city = models.CharField(max_length=20, blank=True)
-    desc = models.TextField(max_length=400)
+    desc = models.TextField(max_length=400, verbose_name='Description')
     ticket = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
