@@ -18,7 +18,7 @@ class Event(models.Model):
     instagram = models.URLField(blank=True)
     discord = models.URLField(blank=True)
     attendance = models.IntegerField(default=0) # editable=False
-    # user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user", default='admin')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
 
     def __str__(self):
         return self.title

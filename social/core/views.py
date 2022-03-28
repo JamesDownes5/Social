@@ -1,5 +1,7 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import AccessMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .forms import EventForm
 from .models import Event, Friend_Request
@@ -51,19 +53,37 @@ class EventView(DetailView):
                 Event.attendance -= 1
 
 
-class EventCreateView(CreateView):
+class EventCreateView(CreateView, AccessMixin):
     model = Event
     template_name = 'core/create.html'
     form_class = EventForm
 
-class EventEditView(UpdateView, UserPassesTestMixin):
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            # This will redirect to the login view
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Organiser").exists():
+            # Redirect the user to somewhere else - add your URL here
+            raise Http404("You are no authorised to create events!")
+        
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class EventEditView(UpdateView, AccessMixin):
     model = Event
     template_name = 'core/create.html'
     form_class = EventForm
 
-    def test_func(self):
-        return self.request.user == Event.user
-
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user == self.get_object().user:
+            # This will redirect to the login view
+            raise Http404("You are not allowed to edit this event!")
+        
+        return super().dispatch(request, *args, **kwargs)
+        
 
 def signup(request):
     if request.method == "POST":
