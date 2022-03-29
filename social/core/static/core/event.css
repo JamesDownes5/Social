@@ -54,8 +54,13 @@ colgroup{
 }
 
 #links img {
-  width: 64px;
-  height: 64px;
+  width: 3rem;
+  height: 3rem;
+  transition-duration: 0.2s;
+}
+
+#links img:hover {
+  transform: scale(1.2);
 }
 
 #links button {
