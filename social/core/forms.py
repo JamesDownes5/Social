@@ -1,5 +1,5 @@
 from django import forms
-from .models import Event, Profile
+from .models import Event, Profile, Attendee
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -10,7 +10,7 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['title', 'image', 'datetime', 'street', 'area', 'city',
-                  'desc', 'ticket', 'facebook', 'instagram', 'discord']
+                  'desc', 'tags', 'ticket', 'facebook', 'instagram', 'discord']
         widgets = {'title': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Title'}),
                    'datetime': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
                    'street': forms.TextInput(attrs={'placeholder': 'Address'}),
@@ -21,6 +21,11 @@ class EventForm(forms.ModelForm):
                    'facebook': forms.URLInput(attrs={'placeholder': 'Facebook Link'}),
                    'instagram': forms.URLInput(attrs={'placeholder': 'Instagram Link'}),
                    'discord': forms.URLInput(attrs={'placeholder': 'Discord Link'}),}
+
+class AttendeeForm(forms.ModelForm):
+    class Meta:
+        model = Attendee
+        fields = []
 
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField()

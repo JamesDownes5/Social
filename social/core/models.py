@@ -13,6 +13,7 @@ class Event(models.Model):
     area = models.CharField(max_length=20, blank=True)
     city = models.CharField(max_length=20, blank=True)
     desc = models.TextField(max_length=400, verbose_name='Description')
+    tags = models.TextField(max_length=200, blank=True)
     ticket = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
@@ -26,9 +27,9 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event', kwargs={'pk': self.pk})
 
-# class Attendance(models.Model):
-#     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+class Attendee(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")

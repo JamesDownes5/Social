@@ -2,13 +2,14 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import AccessMixin
+from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from .forms import EventForm
+from .forms import EventForm, AttendeeForm
 from .models import Event, Friend_Request
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .filters import FriendFilter
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.urls import reverse
 
 class IndexView(ListView):
     template_name = 'core/index.html'
@@ -19,12 +20,19 @@ class IndexView(ListView):
         if 'search' and 'sort' in self.request.GET:
             query = self.request.GET.get('search')
             sort_by = self.request.GET.get('sort')
-            object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+            if query[0:2] == '%23':
+                object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+            else:
+                object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
             return object_list
 
         elif 'search' in self.request.GET:
             query = self.request.GET.get('search')
             object_list = Event.objects.filter(title__icontains=(query))
+            if query[0:2] == '%23':
+                object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+            else:
+                object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
             return object_list
 
         elif 'sort' in self.request.GET:
@@ -41,16 +49,27 @@ class IndexView(ListView):
         context['slideshow_event_list'] = Event.objects.order_by('-attendance')[:5]
         return context
 
-class EventView(DetailView):
+class EventView(DetailView, FormMixin):
     model = Event
     template_name = 'core/event.html'
+    form_class = AttendeeForm
 
-    def post(self, request):
-        if 'attendance' in request.POST:
-            if request.POST.get['attendance'] == True:
-                Event.attendance += 1
-            elif request.POST.get['attendance'] == False:
-                Event.attendance -= 1
+    def get_success_url(self):
+        return reverse('event', kwargs={'pk': self.object.id})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.event = self.get_object()
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 
 class EventCreateView(CreateView, AccessMixin):
