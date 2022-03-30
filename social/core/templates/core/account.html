@@ -3,135 +3,148 @@
 
 {% block title %}Profile{% endblock %}
 {% block imports %}
-<link rel="stylesheet" href={% static 'core/style.css' %} />
-<script src={% static 'core/script.js' %}></script>
+<link rel="stylesheet" href={% static 'core/account.css' %}>
+<script src={% static 'core/friendtabbing.js' %}></script>
 {% endblock %}
 
 {% block content %}
+<center>
   <h1>Profile</h1>
+    <p>&nbsp;</p>
   <!--
     <img src={% static 'core/user.jpg' %} style="width: 200px;height: auto;">
     -->
   <div class="content-section">
     <div class="media">
-      {% if user.profile.img.url %}
-      <img class="rounded-circle account-img" src="{{ user.profile.img.url }}" width="150" height="150">
+      {% if user.profile.img %}
+      <img class="rounded-circle account-img" src="{{ user.profile.img.url }}" width="150" height="150" style="border-radius: 50%">
       {% else %}
-      <img src={% static 'core/user.jpg' %} style="width: 150px;height: 150px;">
+      <img src={% static 'core/user.jpg' %} style="width: 150px;height: 150px;border-radius: 50%;">
       {% endif %}
       <div class="media-body">
         <h2 class="account-heading">{{ user.username }}</h2>
         <p class="text-secondary">{{ user.email }}</p>
       </div>
     </div>
+
+</center>
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Update Profile</legend>
+      <fieldset class="form-group" style="border-radius: 25px">
+        <legend class="border-bottom mb-4" align="center"><h4>Update Profile</h4></legend>
         {{ update_form.as_p }}
         {{ profile_form.as_p }}
         <div class="form-group">
-          <button class="btn btn-outline-info" type="submit">Update</button>
+          <button class="tablinks" type="submit">Update</button>
         </div>
       </fieldset>
-
     </form>
-              <!-- Tab links -->
-        <p></p>
-        <p></p>
-        <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
-            <button class="tablinks" onclick="openTab(event, 'Friends')">Friends</button>
-            <button class="tablinks" onclick="openTab(event, 'Requests')">Requests</button>
-        </div>
-
-      <div class = friend_tabs>
-          <!-- Tab content -->
-
-        <div id="Friends" class="tabcontent" style="display:none" >
-
-
-            <table class = "All friends table">
-                <tr>
-                    <th><h4>Friends</h4></th>
-                </tr>
-
-                {% for user in friends %}
-                    {% if not user.is_superuser %}
-                        {% if not user == request.user %}
-                            <tr>
-                                <td>{{ user }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-
-            </table>
-        </div>
-
-        <div id="Search" class="tabcontent"  id="defaultOpen">
+<p></p>
+      <div class="tab">            <!-- Tab links -->
+            <fieldset style="border-radius: 25px;width:500px;">
+                <legend class="border-bottom mb-4" align="center"><h4>Friends</h4></legend>
             <p></p>
-            <form method="get">
-                {{ friend_filter.form }}
-                <p></p>
-            </form>
-            <table class = "friends table">
-                <tr>
-                    <th style="text-align:left">Users</th>
-                    <th style="width:50%"></th>
-                </tr>
-                {% for user in allusers %}
-                    {% if not user.is_superuser %}
-                        {% if not user == request.user %}
-                            {% if not user in friends %}
+            <p></p>
+                <div style="margin: auto;width: 50%;">
+                <button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
+                <button class="tablinks" onclick="openTab(event, 'Friends')">Friends</button>
+                <button class="tablinks" onclick="openTab(event, 'Requests')">Requests</button>
+                </div>
+
+
+          <div class = friend_tabs>
+              <!-- Tab content -->
+
+            <div id="Friends" class="tabcontent" style="display:none" >
+                <fieldset style="border-radius: 25px;width:500px;">
+
+
+                <table class = "All friends table">
+                    <tr>
+                        <th><h4>Friends</h4></th>
+                    </tr>
+
+                    {% for user in friends %}
+                        {% if not user.is_superuser %}
+                            {% if not user == request.user %}
                                 <tr>
-                                    <td>{{user.username}}</td>
-                                    <td><a  href = "/send_friend_request/{{ user.id }}/"> <input type="button" value="Send Request"></a></td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td>{{user.username}}</td>
-                                    <td>Friend</td>
+                                    <td>{{ user }}</td>
                                 </tr>
                             {% endif %}
                         {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </table>
+                    {% endfor %}
+
+                </table>
+                </fieldset>
+            </div>
+
+            <div id="Search" class="tabcontent"  id="defaultOpen">
+                <fieldset style="border-radius: 25px;width:500px;">
+                <p></p>
+                <form method="get">
+                    {{ friend_filter.form }}
+                    <p></p>
+                </form>
+                <table class = "friends table">
+                    <tr>
+                        <th style="text-align:left">Users</th>
+                        <th style="width:50%"></th>
+                    </tr>
+                    {% for user in allusers %}
+                        {% if not user.is_superuser %}
+                            {% if not user == request.user %}
+                                {% if not user in friends %}
+                                    <tr>
+                                        <td>{{user.username}}</td>
+
+                                        <td><a class="send" href = "/send_friend_request/{{ user.id }}/"><button>Send Request</button></a></td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td>{{user.username}}</td>
+                                        <td>Friend</td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+                </fieldset>
+            </div>
+
+            <div id="Requests" class="tabcontent" style="display:none">
+                <fieldset style="border-radius: 25px;width:500px;">
+                <p></p>
+                <h4>Requests</h4>
+                {% if allrequests|length != 0 %}
+                    {% for friend_request in allrequests %}
+                        {% if friend_request.from_user  != request.user %}
+                            <h4>{{ friend_request.from_user }}
+                                        <a class="accept" href = "/accept_friend_request/{{friend_request.id}}/">
+                                            <button>Accept</button>
+                                        </a>
+                                        <a class="decline" href = "/decline_friend_request/{{friend_request.id}}/">
+                                            <button>Decline</button>
+                                        </a>
+
+                                    </h4>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>No Requests</p>
+                {% endif %}
+            </fieldset>
+
+            </div>
+
+          </div>
         </div>
-
-        <div id="Requests" class="tabcontent" style="display:none">
-            <p></p>
-            <h4>Requests</h4>
-            {% if allrequests|length != 0 %}
-                {% for friend_request in allrequests %}
-                    {% if friend_request.from_user  != request.user %}
-                        <h4>{{ friend_request.from_user }}
-                                    <a href = "/accept_friend_request/{{friend_request.id}}/">
-                                        <input type="button" value="Accept">
-                                    </a>
-                                    <a href = "/decline_friend_request/{{friend_request.id}}/">
-                                        <input type="button" value="Decline">
-                                    </a>
-
-                                </h4>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-                <p>No Requests</p>
-            {% endif %}
-
-        </div>
-
-      </div>
+    </div>
 
 
 
 
-  </div>
-  {% if user.is_authenticated %}
-  <a href={% url 'logout' %}><input type="button" value="Logout" /></a>
-  {% endif %}
+
   <hr>
   <a href={% url 'create' %}>
     <center>Create Event
@@ -166,4 +179,15 @@
         </a></th>
     </tr>
   </table> {% endcomment %}
+
+<p>&nbsp;</p>
+<div class="logout">
+  {% if user.is_authenticated %}
+        <a href={% url 'logout' %} ><button>Logout</button></a>
+  {% endif %}
+</div>
+</center>
+
+
+
 {% endblock %}
