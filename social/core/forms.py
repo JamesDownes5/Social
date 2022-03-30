@@ -24,7 +24,6 @@ class EventForm(forms.ModelForm):
 
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField()
-<<<<<<< HEAD
 
     def clean_email(self):
         data = self.cleaned_data['email']
@@ -32,15 +31,6 @@ class CreateUserForm(UserCreationForm):
             raise forms.ValidationError("Must be a manchester email address")
         return data
 
-=======
-    
-    def __init__(self, *args, **kwargs):
-        super(CreateUserForm, self).__init__(*args, **kwargs)
-    
-        for fieldname in ['username', 'password1', 'password2']:
-            self.fields[fieldname].help_text = None
-            
->>>>>>> master
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
