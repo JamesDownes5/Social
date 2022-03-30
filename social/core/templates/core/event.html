@@ -24,7 +24,10 @@
             <a href="{{ event.ticket }}">Get tickets here</a>
         </p>
         {% endif %}
-        <button>Register interest</button>
+        <form>
+            <input id="interested" type="checkbox" name="interested" hidden checked/>
+            <button id="interest-button" type="submit">Register interest</button>
+        </form>
     </span>
 </div>
 

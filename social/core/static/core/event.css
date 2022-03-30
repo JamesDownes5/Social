@@ -24,7 +24,7 @@ colgroup{
 #event-container span button {
   cursor: pointer;
   width: 100%;
-  background-color: #5299d3;
+  background-color: #29a129;
   color: white;
   font-size: large;
   font-weight: bold;
@@ -35,7 +35,7 @@ colgroup{
 }
 
 #event-container span button:hover {
-  background-color: #4289c3;
+  background-color: #199119;
 }
 
 #event-container img {
@@ -43,6 +43,14 @@ colgroup{
   height: 0;
   border-radius: 1rem;
   object-fit: cover;
+}
+
+#event-container input[type="checkbox"]:checked + button {
+  background-color: #5299d3;
+}
+
+#event-container input[type="checkbox"]:checked + button:hover {
+  background-color: #4289c3;
 }
 
 #links {
