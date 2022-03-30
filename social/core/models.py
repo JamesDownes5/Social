@@ -33,7 +33,7 @@ class Event(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     friends = models.ManyToManyField(User, related_name="friends",blank=True)
-    img = models.ImageField(default= "core/user.jpg", upload_to='profile')
+    img = models.ImageField(upload_to='profile')
 
 
     def __str__(self):

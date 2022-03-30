@@ -25,10 +25,16 @@ class EventForm(forms.ModelForm):
 class CreateUserForm(UserCreationForm):
     email = forms.EmailField()
 
+    def __init__(self, *args, **kwargs):
+        super(CreateUserForm, self).__init__(*args, **kwargs)
+
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
+
     def clean_email(self):
         data = self.cleaned_data['email']
-        if "@manchester.ac.uk" not in data:  # any check you need
-            raise forms.ValidationError("Must be a manchester email address")
+        if "@manchester.ac.uk" not in data:
+            raise forms.ValidationError("Must be a Manchester email address")
         return data
 
     class Meta:
@@ -39,6 +45,12 @@ class CreateUserForm(UserCreationForm):
 # To update username and email
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(label="e-mail")
+
+    def __init__(self, *args, **kwargs):
+        super(UserUpdateForm, self).__init__(*args, **kwargs)
+
+        for fieldname in ['username']:
+            self.fields[fieldname].help_text = None
 
     class Meta:
         model = User
