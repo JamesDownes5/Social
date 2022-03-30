@@ -11,7 +11,7 @@
 {% block content %}
 <h1>Create Account</h1>
 <div class="content-section">
-    <form method="post">
+    <form method="post" class="card">
         {% csrf_token %}
         {{ form }}
         <button class="btn btn-outline-info" type="submit">Create Account</button>
