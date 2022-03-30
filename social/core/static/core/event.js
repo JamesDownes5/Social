@@ -9,13 +9,14 @@ if (is_interested == "on") {
 }
 
 document.querySelectorAll(".tag").forEach(tag => tag.addEventListener("click", e => {
-    window.location.href = window.location.origin + "?tag=" + e.target.textContent.substr(e.target.textContent.indexOf(" ") + 1)
+    window.location.href = window.location.origin + "?tag=" + e.target.textContent.substring(e.target.textContent.indexOf(" ") + 1)
 }));
 
 document.getElementById("copy-button").addEventListener("click", () => {
     console.log("hey");
     var inputc = document.body.appendChild(document.createElement("input"));
-    inputc.value = window.location.href;
+    let href = window.location.href;
+    inputc.value = href.substring(0, href.indexOf("?"));
     inputc.focus();
     inputc.select();
     document.execCommand('copy');
