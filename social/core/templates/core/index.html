@@ -57,8 +57,21 @@
         <div>
             <h3>{{ event.title }}</h6>
                 <p>{{ event.datetime }}</p>
-                <p>{{ event.street }}</p>
+                <p>
+                    {{ event.street }},
+                    {{ event.area }},
+                    {{ event.city }}
+                </p>
                 <p>{{ event.desc }}</p>
+
+                <div id="tags">
+                    {% for tag in event.tags %}
+                    <div class="tag"># {{ tag }}</div>
+                    {% endfor %}
+                </div>
+
+                <p>Interested: {{ event.attendance }}</p>
+
                 <a href="event/{{ event.id }}">Find out more...</a>
         </div>
     </div>
