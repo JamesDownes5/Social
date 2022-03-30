@@ -53,6 +53,26 @@ colgroup{
   background-color: #4289c3;
 }
 
+#tags {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  cursor: pointer;
+  background-color: rgb(238, 246, 255);
+  border: 1px solid rgb(187, 223, 255);
+  border-radius: 1rem;
+  padding: 0.5rem 0.75rem;
+  transition-duration: 0.2s;
+}
+
+.tag:hover {
+  padding: 0.5rem 1rem;
+  background-color: rgb(231, 242, 255);
+}
+
 #links {
   display: flex;
   align-items: center;
