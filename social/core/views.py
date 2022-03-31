@@ -95,6 +95,17 @@ class EventView(DetailView, FormMixin, AccessMixin):
             else:
                 context["attending"] = False
         self.object.tags = self.object.tags.split()
+        relatedEvents = []
+        for tag in self.object.tags:
+            relatedEvents += Event.objects.filter(tags__icontains=(tag)).distinct()
+
+        relatedEvents = list(dict.fromkeys(relatedEvents))
+        relatedEvents.remove(self.object)
+
+        for event in relatedEvents:
+            event.tags = event.tags.split()
+
+        context['relatedEvents'] = relatedEvents
         return context
     
 
