@@ -5,11 +5,11 @@ let is_interested = url.searchParams.get("interested");
 
 if (is_interested == "on") {
     document.getElementById("interested").checked = false;
-    document.getElementById("interest-button").textContent = "Interested Registered"
+    document.getElementById("interest-button").textContent = "Interested Registered";
 }
 
 document.querySelectorAll(".tag").forEach(tag => tag.addEventListener("click", e => {
-    window.location.href = window.location.origin + "?search=" + e.target.textContent.substring(e.target.textContent.indexOf(" ") + 1)
+    window.location.href = window.location.origin + "?search=" + e.target.textContent;
 }));
 
 document.getElementById("copy-button").addEventListener("click", () => {
