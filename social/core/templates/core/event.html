@@ -17,20 +17,27 @@
             {{ event.area }}
             {{ event.city }}
         </h5>
+
+        <div id="tags">
+            {% for tag in event.tags %}
+            <div class="tag"># {{ tag }}</div>
+            {% endfor %}
+        </div>
+
         <p>{{ event.desc }}</p>
 
         {% if event.ticket %}
-        <p>
-            <a href="{{ event.ticket }}">Get tickets here</a>
-        </p>
+        <p><a href="{{ event.ticket }}">Get tickets here</a></p>
         {% endif %}
+
+        <p>Interested: {{ event.attendance }}</p>
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
-            <button type="submit">Register Interest</button>
+            <input id="interested" type="checkbox" name="interested" hidden checked/>
+            <button id="interest-button" type="submit">Register interest</button>
         </form>
-
     </span>
 </div>
 

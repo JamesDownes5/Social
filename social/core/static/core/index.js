@@ -35,10 +35,16 @@ if (search_field) {
 
 // Event links
 document.querySelectorAll(".card").forEach(element => {
-    element.addEventListener("click", () => {
-        window.location.href = origin + element.getAttribute("data-link");
+    element.addEventListener("click", e => {
+        if (!e.target.classList.contains("tag")) {
+            window.location.href = origin + element.getAttribute("data-link");            
+        }
     });
 });
+
+document.querySelectorAll(".tag").forEach(tag => tag.addEventListener("click", e => {
+    window.location.href = window.location.origin + "?tag=" + e.target.textContent.substr(e.target.textContent.indexOf(" ") + 1);
+}));
 
 function showSlide(n) {
     let slide_index = n;
