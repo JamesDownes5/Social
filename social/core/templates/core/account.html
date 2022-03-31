@@ -113,7 +113,9 @@
 </div>
 
 <h1>Your Events</h1>
-
+{% if not userEvents %}
+<p>Silly you! You haven't registered interest in any events! Go and explore!</p>
+{% else %}
 <div id="events-container">
   {% for event in userEvents %}
   <div class="card" data-link="/event/{{ event.id }}">
@@ -141,9 +143,12 @@
   </div>
   {% endfor %}
 </div>
+{% endif %}
 
 <h1>Friend's Events</h1>
-
+{% if not firendsEvents %}
+<p>Awww! Looks like your friends are fucking basement dwellers! If you even fucking have any!</p>
+{% else %}
 <div id="events-container">
   {% for event in friendEvents %}
   <div class="card" data-link="/event/{{ event.id }}">
@@ -171,6 +176,7 @@
   </div>
   {% endfor %}
 </div>
+{% endif %}
 
 <script src={% static 'core/script.js' %}></script>
 <script src={% static 'core/index.js' %}></script>

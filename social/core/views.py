@@ -17,33 +17,39 @@ class IndexView(ListView):
     paginate_by = 9
 
     def get_queryset(self):
-        if 'search' and 'sort' in self.request.GET:
-            query = self.request.GET.get('search')
-            sort_by = self.request.GET.get('sort')
-            if query[0:2] == '%23':
-                object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
-            else:
-                object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
+        try:
+            if 'search' and 'sort' in self.request.GET:
+                query = self.request.GET.get('search')
+                sort_by = self.request.GET.get('sort')
+                if query[0] == '#':
+                    object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
+                else:
+                    object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
 
-        elif 'search' in self.request.GET:
-            query = self.request.GET.get('search')
-            object_list = Event.objects.filter(title__icontains=(query))
-            if query[0:2] == '%23':
+            elif 'search' in self.request.GET:
+                query = self.request.GET.get('search')
                 object_list = Event.objects.filter(title__icontains=(query))
-            else:
-                object_list = Event.objects.filter(tags__icontains=(query))
+                if query[0] == '#':
+                    object_list = Event.objects.filter(tags__icontains=(query))
+                else:
+                    object_list = Event.objects.filter(title__icontains=(query))
 
-        elif 'sort' in self.request.GET:
-            sort_by = self.request.GET.get('sort')
-            object_list = Event.objects.order_by(sort_by)
+            elif 'sort' in self.request.GET:
+                sort_by = self.request.GET.get('sort')
+                object_list = Event.objects.order_by(sort_by)
+        
+            for object in object_list:
+                object.tags = object.tags.split()
+                
+            return object_list
 
-        else:
+        except:
             object_list = Event.objects.order_by('-attendance')
         
-        for object in object_list:
-            object.tags = object.tags.split()
-            
-        return object_list
+            for object in object_list:
+                object.tags = object.tags.split()
+
+            return object_list
 
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
@@ -108,7 +114,6 @@ class EventView(DetailView, FormMixin, AccessMixin):
         context['relatedEvents'] = relatedEvents
         return context
     
-
 
 class EventCreateView(CreateView, AccessMixin):
     model = Event

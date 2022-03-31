@@ -38,7 +38,7 @@ class CreateUserForm(UserCreationForm):
 
     def clean_email(self):
         data = self.cleaned_data['email']
-        if "@manchester.ac.uk" not in data:
+        if "manchester.ac.uk" not in data:
             raise forms.ValidationError("Must be a Manchester email address")
         return data
 

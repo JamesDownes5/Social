@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -34,7 +35,7 @@ class Attendee(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     friends = models.ManyToManyField(User, related_name="friends",blank=True)
-    img = models.ImageField(upload_to='profile')
+    img = models.ImageField(upload_to='profile', default="profile/user.jpg")
 
 
     def __str__(self):
