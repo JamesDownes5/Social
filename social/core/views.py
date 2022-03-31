@@ -66,9 +66,12 @@ class EventView(DetailView, FormMixin):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        form.instance.event = self.get_object()
+        event = self.get_object()
+        form.instance.event = event
         form.instance.user = self.request.user
+        event.attendance += 1
         form.save()
+        event.save()
         return super().form_valid(form)
 
 
