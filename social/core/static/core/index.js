@@ -43,7 +43,7 @@ document.querySelectorAll(".card").forEach(element => {
 });
 
 document.querySelectorAll(".tag").forEach(tag => tag.addEventListener("click", e => {
-    window.location.href = window.location.origin + "?search=" + e.target.textContent;
+    window.location.href = window.location.origin + "?search=" + e.target.textContent.replace("#", "%23");
 }));
 
 function showSlide(n) {
