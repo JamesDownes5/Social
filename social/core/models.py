@@ -12,7 +12,7 @@ class Event(models.Model):
     street = models.CharField(max_length=50, blank=True)
     area = models.CharField(max_length=20, blank=True)
     city = models.CharField(max_length=20, blank=True)
-    desc = models.TextField(max_length=400, verbose_name='Description')
+    desc = models.TextField(verbose_name='Description')
     tags = models.TextField(max_length=200, blank=True)
     ticket = models.URLField(blank=True)
     facebook = models.URLField(blank=True)

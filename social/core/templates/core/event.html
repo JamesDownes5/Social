@@ -20,18 +20,8 @@
 
         <div id="tags">
             {% for tag in event.tags %}
-            <div class="tag"># {{ tag }}</div>
+            <div class="tag">{{ tag }}</div>
             {% endfor %}
-            {% comment %} Example data {% endcomment %}
-            <div class="tag"># tag1</div>
-            <div class="tag"># tag2</div>
-            <div class="tag"># longer_tag</div>
-            <div class="tag"># wheeeee</div>
-            <div class="tag"># idk_anymore</div>
-            <div class="tag"># idk_anymore</div>
-            <div class="tag"># idk_anymore</div>
-            <div class="tag"># idk_anymore</div>
-            <div class="tag"># idk_anymore</div>
         </div>
 
         <p>{{ event.desc }}</p>
@@ -42,12 +32,19 @@
 
         <p>Interested: {{ event.attendance }}</p>
 
+        {% if attending == True %}
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
-            <input id="interested" type="checkbox" name="interested" hidden checked/>
-            <button id="interest-button" type="submit">Register interest</button>
+            <button id="not-interest-button" name="not-interested" type="submit">Interest Registered</button>
         </form>
+        {% else %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button id="interest-button" name="interested" type="submit">Register Interest</button>
+        </form>
+        {% endif %}
     </span>
 </div>
 

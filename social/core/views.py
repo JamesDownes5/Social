@@ -24,7 +24,6 @@ class IndexView(ListView):
                 object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
             else:
                 object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
-            return object_list
 
         elif 'search' in self.request.GET:
             query = self.request.GET.get('search')
@@ -33,23 +32,25 @@ class IndexView(ListView):
                 object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
             else:
                 object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
-            return object_list
 
         elif 'sort' in self.request.GET:
             sort_by = self.request.GET.get('sort')
             object_list = Event.objects.order_by(sort_by)
-            return object_list
 
         else:
-            object_list = Event.objects.all()
-            return object_list
+            object_list = Event.objects.order_by('-attendance')
+        
+        for object in object_list:
+            object.tags = object.tags.split()
+            
+        return object_list
 
     def get_context_data(self, *args, **kwargs):
         context = super(IndexView, self).get_context_data(*args, **kwargs)
         context['slideshow_event_list'] = Event.objects.order_by('-attendance')[:5]
         return context
 
-class EventView(DetailView, FormMixin):
+class EventView(DetailView, FormMixin, AccessMixin):
     model = Event
     template_name = 'core/event.html'
     form_class = AttendeeForm
@@ -60,19 +61,42 @@ class EventView(DetailView, FormMixin):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
-        if form.is_valid():
+
+        if not request.user.is_authenticated:
+            # This will redirect to the login view
+            return self.handle_no_permission()
+        elif form.is_valid():
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
 
     def form_valid(self, form):
         event = self.get_object()
-        form.instance.event = event
-        form.instance.user = self.request.user
-        event.attendance += 1
-        form.save()
-        event.save()
+        if "interested" in self.request.POST:
+            print("Interested")
+            form.instance.event = event
+            form.instance.user = self.request.user
+            event.attendance += 1
+            form.save()
+            event.save()
+        elif "not-interested" in self.request.POST:
+            print("Not Interested")
+            Attendee.objects.filter(event=self.get_object(), user=self.request.user).delete()
+            event.attendance -= 1
+            event.save()
+
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            if Attendee.objects.filter(event=self.get_object(), user=self.request.user):    
+                context["attending"] = True
+            else:
+                context["attending"] = False
+        self.object.tags = self.object.tags.split()
+        return context
+    
 
 
 class EventCreateView(CreateView, AccessMixin):
@@ -101,7 +125,6 @@ class EventEditView(UpdateView, AccessMixin):
 
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user == self.get_object().user:
-            # This will redirect to the login view
             raise Http404("You are not allowed to edit this event!")
         
         return super().dispatch(request, *args, **kwargs)
@@ -136,6 +159,7 @@ def account(request):
     friends = current.friends.all()
     friend_filter = FriendFilter(request.GET,queryset=allusers)
     allusers = friend_filter.qs
+    personalEvents = Event
 
     context = {
         'update_form': update_form,
