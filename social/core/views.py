@@ -37,6 +37,9 @@ class IndexView(ListView):
             elif 'sort' in self.request.GET:
                 sort_by = self.request.GET.get('sort')
                 object_list = Event.objects.order_by(sort_by)
+
+            else:
+                object_list = Event.objects.order_by('-attendance')
         
             for object in object_list:
                 object.tags = object.tags.split()
@@ -44,7 +47,7 @@ class IndexView(ListView):
             return object_list
 
         except:
-            object_list = Event.objects.order_by('-attendance')
+            object_list = Event.objects.order_by('-attendance').order_by(self.request.GET.get('sort'))
         
             for object in object_list:
                 object.tags = object.tags.split()

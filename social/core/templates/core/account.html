@@ -110,7 +110,7 @@
       {% endif %}
     </div>
   </div>
-</div>
+</div> 
 
 <h1>Your Events</h1>
 {% if not userEvents %}
@@ -118,7 +118,7 @@
 {% else %}
 <div id="events-container">
   {% for event in userEvents %}
-  <div class="card" data-link="/event/{{ event.id }}">
+  <div class="card" data-link= "event/{{ event.id }}/">>
       <img src={{ event.image.url }} style="width:100%">
       <div>
           <h3>{{ event.title }}</h6>
@@ -138,7 +138,7 @@
 
               <p>Interested: {{ event.attendance }}</p>
 
-              <a href="event/{{ event.id }}">Find out more...</a>
+              <a href="event/{{ event.id }}/">Find out more...</a>
       </div>
   </div>
   {% endfor %}
@@ -151,7 +151,7 @@
 {% else %}
 <div id="events-container">
   {% for event in friendEvents %}
-  <div class="card" data-link="/event/{{ event.id }}">
+  <div class="card" data-link="event/{{ event.id }}/">>
       <img src={{ event.image.url }} style="width:100%">
       <div>
           <h3>{{ event.title }}</h6>
@@ -171,7 +171,7 @@
 
               <p>Interested: {{ event.attendance }}</p>
 
-              <a href="event/{{ event.id }}">Find out more...</a>
+              <a href="event/{{ event.id }}/">Find out more...</a>
       </div>
   </div>
   {% endfor %}
