@@ -12,7 +12,7 @@
 {% block content %}
 <h1>Log In</h1>
 <div class="content-section">
-    <form method="post">
+    <form method="post" class="card">
         {% csrf_token %}
         {{ form }}
         <a href={% url 'signup' %}>Create account</a>
