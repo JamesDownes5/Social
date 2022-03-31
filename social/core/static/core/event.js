@@ -9,7 +9,7 @@ if (is_interested == "on") {
 }
 
 document.querySelectorAll(".tag").forEach(tag => tag.addEventListener("click", e => {
-    window.location.href = window.location.origin + "?tag=" + e.target.textContent.substring(e.target.textContent.indexOf(" ") + 1)
+    window.location.href = window.location.origin + "?search=" + e.target.textContent.substring(e.target.textContent.indexOf(" ") + 1)
 }));
 
 document.getElementById("copy-button").addEventListener("click", () => {
