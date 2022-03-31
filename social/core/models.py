@@ -28,7 +28,7 @@ class Event(models.Model):
         return reverse('event', kwargs={'pk': self.pk})
 
 class Attendee(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Profile(models.Model):

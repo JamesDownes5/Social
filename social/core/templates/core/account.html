@@ -5,6 +5,7 @@
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/charles.css' %} />
 <link rel="stylesheet" href={% static 'core/account.css' %} />
+<link rel="stylesheet" href={% static 'core/card.css' %} />
 {% endblock %}
 
 {% block content %}
@@ -109,6 +110,66 @@
       {% endif %}
     </div>
   </div>
+</div>
+
+<h1>Your Events</h1>
+
+<div id="events-container">
+  {% for event in userEvents %}
+  <div class="card" data-link="/event/{{ event.id }}">
+      <img src={{ event.image.url }} style="width:100%">
+      <div>
+          <h3>{{ event.title }}</h6>
+              <p>{{ event.datetime }}</p>
+              <p>
+                  {{ event.street }},
+                  {{ event.area }},
+                  {{ event.city }}
+              </p>
+              <p>{{ event.desc }}</p>
+
+              <div id="tags">
+                  {% for tag in event.tags %}
+                  <div class="tag">{{ tag }}</div>
+                  {% endfor %}
+              </div>
+
+              <p>Interested: {{ event.attendance }}</p>
+
+              <a href="event/{{ event.id }}">Find out more...</a>
+      </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h1>Friend's Events</h1>
+
+<div id="events-container">
+  {% for event in friendEvents %}
+  <div class="card" data-link="/event/{{ event.id }}">
+      <img src={{ event.image.url }} style="width:100%">
+      <div>
+          <h3>{{ event.title }}</h6>
+              <p>{{ event.datetime }}</p>
+              <p>
+                  {{ event.street }},
+                  {{ event.area }},
+                  {{ event.city }}
+              </p>
+              <p>{{ event.desc }}</p>
+
+              <div id="tags">
+                  {% for tag in event.tags %}
+                  <div class="tag">{{ tag }}</div>
+                  {% endfor %}
+              </div>
+
+              <p>Interested: {{ event.attendance }}</p>
+
+              <a href="event/{{ event.id }}">Find out more...</a>
+      </div>
+  </div>
+  {% endfor %}
 </div>
 
 <script src={% static 'core/script.js' %}></script>

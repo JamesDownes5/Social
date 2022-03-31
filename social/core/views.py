@@ -29,9 +29,9 @@ class IndexView(ListView):
             query = self.request.GET.get('search')
             object_list = Event.objects.filter(title__icontains=(query))
             if query[0:2] == '%23':
-                object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+                object_list = Event.objects.filter(title__icontains=(query))
             else:
-                object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
+                object_list = Event.objects.filter(tags__icontains=(query))
 
         elif 'sort' in self.request.GET:
             sort_by = self.request.GET.get('sort')
@@ -155,11 +155,21 @@ def account(request):
         profile_form = ProfileUpdateForm(instance=request.user.profile)
     all_friend_requests = Friend_Request.objects.filter(to_user = request.user.profile)
     allusers = get_user_model().objects.all()
-    current = Profile.objects.get(id= request.user.id)
+    current = Profile.objects.get(id=request.user.id)
     friends = current.friends.all()
     friend_filter = FriendFilter(request.GET,queryset=allusers)
     allusers = friend_filter.qs
-    personalEvents = Event
+    userEvents = Event.objects.filter(event__in=Attendee.objects.filter(user=request.user))
+    friendEvents = []
+    for friend in friends:
+        friendEvents += Event.objects.filter(event__in=Attendee.objects.filter(user=friend))
+
+    print(friendEvents)
+    for event in userEvents:
+            event.tags = event.tags.split()
+
+    for event in friendEvents:
+            event.tags = event.tags.split()
 
     context = {
         'update_form': update_form,
@@ -167,8 +177,9 @@ def account(request):
         'allrequests': all_friend_requests,
         "allusers": allusers,
         "friend_filter": friend_filter,
-        "friends": friends
-
+        "friends": friends,
+        "userEvents": userEvents,
+        "friendEvents" : friendEvents
     }
     return render(request, 'core/account.html', context)
 
