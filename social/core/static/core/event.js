@@ -13,10 +13,8 @@ document.querySelectorAll(".tag").forEach(tag => tag.addEventListener("click", e
 }));
 
 document.getElementById("copy-button").addEventListener("click", () => {
-    console.log("hey");
     var inputc = document.body.appendChild(document.createElement("input"));
-    let href = window.location.href;
-    inputc.value = href.substring(0, href.indexOf("?"));
+    inputc.value = window.location.href;
     inputc.focus();
     inputc.select();
     document.execCommand('copy');
