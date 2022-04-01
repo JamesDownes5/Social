@@ -1,15 +1,5 @@
-const imageInput = document.querySelector("#image_input");
-console.log(imageInput);
-var uploaded_image = "";
-
-imageInput.addEventListener("change", function(){
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-        uploadedImage = reader.result;
-        document.querySelector("#displayI=_image").style.backgroundImage = 'url(${uploaded_image})';
-    });
-    reader.readAsDataURL(this.files[0]);
-})
+document.querySelector("#search label[for='id_username']").remove();
+document.querySelector("#search #id_username").setAttribute("placeholder", "Search for users...");
 
 function openTab(evt, tabName) {
       // Declare all variables
@@ -28,7 +18,7 @@ function openTab(evt, tabName) {
       }
 
       // Show the current tab, and add an "active" class to the button that opened the tab
-      document.getElementById(tabName).style.display = "block";
+      document.getElementById(tabName).style.display = "inherit";
       evt.currentTarget.className += " active";
 
       //Show Friends Tab by default
