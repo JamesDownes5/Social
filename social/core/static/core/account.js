@@ -1,31 +1,14 @@
 document.querySelector("#search label[for='id_username']").remove();
 document.querySelector("#search #id_username").setAttribute("placeholder", "Search for users...");
 
-function openTab(evt, tabName) {
-      // Declare all variables
-      var i, tabcontent, tablinks;
+document.querySelectorAll(".tablinks").forEach(element => element.addEventListener("click", openTab));
 
-      // Get all elements with class="tabcontent" and hide them
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
+function openTab(e) {
+  let tab = document.querySelector(".active");
+  tab.classList.remove("active");
+  document.getElementById(tab.id.substring(0, tab.id.indexOf("-"))).style.display = "none";
 
-      // Get all elements with class="tablinks" and remove the class "active"
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-
-      // Show the current tab, and add an "active" class to the button that opened the tab
-      document.getElementById(tabName).style.display = "inherit";
-      evt.currentTarget.className += " active";
-
-      //Show Friends Tab by default
-      document.getElementById("defaultOpen").click();
-
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < x.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
-      }
-    }
+  tab = e.target;
+  tab.classList.add("active");
+  document.getElementById(tab.id.substring(0, tab.id.indexOf("-"))).style.display = "inherit";
+}
