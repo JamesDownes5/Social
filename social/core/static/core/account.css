@@ -1,76 +1,118 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  background-color: white;
-  padding-bottom: 100px;
-}
-/* Style the buttons that are used to open the tab content */
-.tab button {
-  background-color: #ddd;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  border-radius: 10px;
+#profile-pic {
+    display: block;
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto 2rem auto;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color: #5299d3;
+.content-section {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-/* Create an active/current tablink class */
-.tab button.active {
-  background-color: #ccc;
+.content-section h2 {
+    margin-bottom: 0;
 }
 
-/* Style the tab content */
-.tabcontent {
-  padding: 6px 12px;
-  border: none;
-  border-top: none;
-}
-.tabcontent {
-  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+.content-section .card:hover {
+    cursor: auto;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2);
 }
 
-.logout button {
-  background-color: #ddd;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 20px 50px;
-  transition: 0.3s;
-  border-radius: 10px;
+#tablinks-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 1.5rem 0 0 0;
+    margin: 0;
 }
 
-/* Change background color of buttons on hover */
-.logout button:hover {
-  background-color: #ff5252;
-}
-.send button {
-  padding: 10px 5px;
-}
-
-/* Change background color of buttons on hover */
-.send button:hover {
-  background-color: #00ccff;
-}
-
-/* Change background color of buttons on hover */
-.accept button:hover {
-  background-color: #66ff66;
+.tablinks {
+    cursor: pointer;
+    padding: 1rem;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: unset;
+    border: none;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom: 1px solid black;
 }
 
-/* Change background color of buttons on hover */
-.decline button:hover {
-  background-color: #ff5252;
+.tablinks.active {
+    border: 1px solid black;
+    border-bottom: none;
 }
 
+#search, #friends, #requests {
+    padding: 0;
+}
 
+#search form {
+    display: flex;
+}
 
-/* Go from zero to full opacity */
-@keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
+#search #id_username {
+    margin-top: 1rem;
+    flex-grow: 1;
+    height: 2rem;
+    border: none;
+    border-radius: 1rem;
+    outline: none;
+    background-color: #eeeeee;
+    font-size: 15px;
+    transition-duration: 0.2s;
+    background-image: url('search.png');
+    background-position: 1rem 50%;
+    background-repeat: no-repeat;
+    padding-left: 3rem;
+}
+
+#search #id_username:focus, #search #id_username:hover {
+    background-color: #dddddd;
+}
+
+#search {
+    display: flex;
+    flex-direction: column;
+}
+
+#requests {
+    margin: 1rem 0 0 0;
+}
+
+#search div, #requests div {
+    margin: 0;
+}
+
+#search > div, #requests {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#search > div > div, #requests > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    gap: 1rem;
+    align-items: center;
+}
+
+#search > div > div > span:first-of-type, #requests > div > span:first-of-type {
+    justify-self: end;
+}
+
+#friends {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0 0 0;
+}
+
+body > p {
+    text-align: center;
+}

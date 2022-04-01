@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -12,7 +13,8 @@ class Event(models.Model):
     street = models.CharField(max_length=50, blank=True)
     area = models.CharField(max_length=20, blank=True)
     city = models.CharField(max_length=20, blank=True)
-    desc = models.TextField(max_length=400, verbose_name='Description')
+    desc = models.TextField(verbose_name='Description')
+    tags = models.TextField(max_length=200, blank=True)
     ticket = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
@@ -26,14 +28,14 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event', kwargs={'pk': self.pk})
 
-# class Attendance(models.Model):
-#     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+class Attendee(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     friends = models.ManyToManyField(User, related_name="friends",blank=True)
-    img = models.ImageField(upload_to='profile')
+    img = models.ImageField(upload_to='profile', default="profile/user.jpg")
 
 
     def __str__(self):

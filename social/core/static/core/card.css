@@ -37,3 +37,25 @@
 .card h3 {
     margin-top: 0em;
 }
+
+#tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    padding: 0;
+}
+
+#tags .tag {
+    cursor: pointer;
+    background-color: rgb(238, 246, 255);
+    border: 1px solid rgb(187, 223, 255);
+    border-radius: 1rem;
+    padding: 0.5rem 0.75rem;
+    transition-duration: 0.2s;
+    margin: 0;
+}
+
+#tags .tag:hover {
+    padding: 0.5rem 1rem;
+    background-color: rgb(231, 242, 255);
+}

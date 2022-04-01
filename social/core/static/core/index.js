@@ -33,13 +33,6 @@ if (search_field) {
     document.querySelector(".search-form").scrollIntoView();
 }
 
-// Event links
-document.querySelectorAll(".card").forEach(element => {
-    element.addEventListener("click", () => {
-        window.location.href = origin + element.getAttribute("data-link");
-    });
-});
-
 function showSlide(n) {
     let slide_index = n;
     let slideshow = document.querySelectorAll(".slideshow");

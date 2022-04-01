@@ -4,6 +4,7 @@
 {% block title %}{{ event.title }}{% endblock %}
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/event.css' %} />
+<link rel="stylesheet" href={% static 'core/card.css' %} />
 {% endblock %}
 
 {% block content %}
@@ -17,14 +18,34 @@
             {{ event.area }}
             {{ event.city }}
         </h5>
+
+        <div id="tags">
+            {% for tag in event.tags %}
+            <div class="tag">{{ tag }}</div>
+            {% endfor %}
+        </div>
+
         <p>{{ event.desc }}</p>
 
         {% if event.ticket %}
-        <p>
-            <a href="{{ event.ticket }}">Get tickets here</a>
-        </p>
+        <p><a href="{{ event.ticket }}">Get tickets here</a></p>
         {% endif %}
-        <button>Register interest</button>
+
+        <p>Interested: {{ event.attendance }}</p>
+
+        {% if attending == True %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button id="not-interest-button" name="not-interested" type="submit">Interest Registered</button>
+        </form>
+        {% else %}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button id="interest-button" name="interested" type="submit">Register Interest</button>
+        </form>
+        {% endif %}
     </span>
 </div>
 
@@ -35,5 +56,34 @@
     <button id="copy-button">Copy Link</button>
 </div>
 
+<div id="events-container">
+    {% for event in relatedEvents %}
+    <div class="card" data-link="/event/{{ event.id }}">
+        <img src={{ event.image.url }} style="width:100%">
+        <div>
+            <h3>{{ event.title }}</h6>
+                <p>{{ event.datetime }}</p>
+                <p>
+                    {{ event.street }},
+                    {{ event.area }},
+                    {{ event.city }}
+                </p>
+                <p>{{ event.desc }}</p>
+  
+                <div id="tags">
+                    {% for tag in event.tags %}
+                    <div class="tag">{{ tag }}</div>
+                    {% endfor %}
+                </div>
+  
+                <p>Interested: {{ event.attendance }}</p>
+  
+                <a href="/event/{{ event.id }}">Find out more...</a>
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+
 <script src={% static 'core/event.js' %}></script>
+<script src={% static 'core/card.js' %}></script>
 {% endblock %}

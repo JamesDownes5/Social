@@ -3,10 +3,12 @@
 *.pot
 *.pyc
 */__pycache__
-*/migrations
+*/migrations/**/*.py
 db.sqlite3
 */media/**/*.jpg
 */media/**/*.png
+*/media/**/*.jpeg
+
 
 # Backup files # 
 *.bak 

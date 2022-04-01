@@ -2,13 +2,14 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import AccessMixin
+from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from .forms import EventForm
+from .forms import EventForm, AttendeeForm
 from .models import Event, Friend_Request
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from .filters import FriendFilter
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.urls import reverse
 
 class IndexView(ListView):
     template_name = 'core/index.html'
@@ -16,24 +17,41 @@ class IndexView(ListView):
     paginate_by = 9
 
     def get_queryset(self):
-        if 'search' and 'sort' in self.request.GET:
-            query = self.request.GET.get('search')
-            sort_by = self.request.GET.get('sort')
-            object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+        try:
+            if 'search' and 'sort' in self.request.GET:
+                query = self.request.GET.get('search')
+                sort_by = self.request.GET.get('sort')
+                if query[0] == '#':
+                    object_list = Event.objects.filter(tags__icontains=(query)).order_by(sort_by)
+                else:
+                    object_list = Event.objects.filter(title__icontains=(query)).order_by(sort_by)
+
+            elif 'search' in self.request.GET:
+                query = self.request.GET.get('search')
+                object_list = Event.objects.filter(title__icontains=(query))
+                if query[0] == '#':
+                    object_list = Event.objects.filter(tags__icontains=(query))
+                else:
+                    object_list = Event.objects.filter(title__icontains=(query))
+
+            elif 'sort' in self.request.GET:
+                sort_by = self.request.GET.get('sort')
+                object_list = Event.objects.order_by(sort_by)
+
+            else:
+                object_list = Event.objects.order_by('-attendance')
+        
+            for object in object_list:
+                object.tags = object.tags.split()
+                
             return object_list
 
-        elif 'search' in self.request.GET:
-            query = self.request.GET.get('search')
-            object_list = Event.objects.filter(title__icontains=(query))
-            return object_list
+        except:
+            object_list = Event.objects.order_by('-attendance').order_by(self.request.GET.get('sort'))
+        
+            for object in object_list:
+                object.tags = object.tags.split()
 
-        elif 'sort' in self.request.GET:
-            sort_by = self.request.GET.get('sort')
-            object_list = Event.objects.order_by(sort_by)
-            return object_list
-
-        else:
-            object_list = Event.objects.all()
             return object_list
 
     def get_context_data(self, *args, **kwargs):
@@ -41,17 +59,64 @@ class IndexView(ListView):
         context['slideshow_event_list'] = Event.objects.order_by('-attendance')[:5]
         return context
 
-class EventView(DetailView):
+class EventView(DetailView, FormMixin, AccessMixin):
     model = Event
     template_name = 'core/event.html'
+    form_class = AttendeeForm
 
-    def post(self, request):
-        if 'attendance' in request.POST:
-            if request.POST.get['attendance'] == True:
-                Event.attendance += 1
-            elif request.POST.get['attendance'] == False:
-                Event.attendance -= 1
+    def get_success_url(self):
+        return reverse('event', kwargs={'pk': self.object.id})
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+
+        if not request.user.is_authenticated:
+            # This will redirect to the login view
+            return self.handle_no_permission()
+        elif form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        event = self.get_object()
+        if "interested" in self.request.POST:
+            print("Interested")
+            form.instance.event = event
+            form.instance.user = self.request.user
+            event.attendance += 1
+            form.save()
+            event.save()
+        elif "not-interested" in self.request.POST:
+            print("Not Interested")
+            Attendee.objects.filter(event=self.get_object(), user=self.request.user).delete()
+            event.attendance -= 1
+            event.save()
+
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            if Attendee.objects.filter(event=self.get_object(), user=self.request.user):    
+                context["attending"] = True
+            else:
+                context["attending"] = False
+        self.object.tags = self.object.tags.split()
+        relatedEvents = []
+        for tag in self.object.tags:
+            relatedEvents += Event.objects.filter(tags__icontains=(tag)).distinct()
+
+        relatedEvents = list(dict.fromkeys(relatedEvents))
+        relatedEvents.remove(self.object)
+
+        for event in relatedEvents:
+            event.tags = event.tags.split()
+
+        context['relatedEvents'] = relatedEvents
+        return context
+    
 
 class EventCreateView(CreateView, AccessMixin):
     model = Event
@@ -79,7 +144,6 @@ class EventEditView(UpdateView, AccessMixin):
 
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user == self.get_object().user:
-            # This will redirect to the login view
             raise Http404("You are not allowed to edit this event!")
         
         return super().dispatch(request, *args, **kwargs)
@@ -110,10 +174,21 @@ def account(request):
         profile_form = ProfileUpdateForm(instance=request.user.profile)
     all_friend_requests = Friend_Request.objects.filter(to_user = request.user.profile)
     allusers = get_user_model().objects.all()
-    current = Profile.objects.get(id= request.user.id)
+    current = Profile.objects.get(id=request.user.id)
     friends = current.friends.all()
     friend_filter = FriendFilter(request.GET,queryset=allusers)
     allusers = friend_filter.qs
+    userEvents = Event.objects.filter(event__in=Attendee.objects.filter(user=request.user))
+    friendEvents = []
+    for friend in friends:
+        friendEvents += Event.objects.filter(event__in=Attendee.objects.filter(user=friend))
+
+    print(friendEvents)
+    for event in userEvents:
+            event.tags = event.tags.split()
+
+    for event in friendEvents:
+            event.tags = event.tags.split()
 
     context = {
         'update_form': update_form,
@@ -121,8 +196,9 @@ def account(request):
         'allrequests': all_friend_requests,
         "allusers": allusers,
         "friend_filter": friend_filter,
-        "friends": friends
-
+        "friends": friends,
+        "userEvents": userEvents,
+        "friendEvents" : friendEvents
     }
     return render(request, 'core/account.html', context)
 
