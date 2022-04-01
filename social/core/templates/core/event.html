@@ -78,11 +78,12 @@
   
                 <p>Interested: {{ event.attendance }}</p>
   
-                <a href="event/{{ event.id }}">Find out more...</a>
+                <a href="/event/{{ event.id }}">Find out more...</a>
         </div>
     </div>
     {% endfor %}
   </div>
 
 <script src={% static 'core/event.js' %}></script>
+<script src={% static 'core/card.js' %}></script>
 {% endblock %}
