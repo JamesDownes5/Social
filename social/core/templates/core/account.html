@@ -4,113 +4,93 @@
 {% block title %}Profile{% endblock %}
 {% block imports %}
 <link rel="stylesheet" href={% static 'core/charles.css' %} />
-<link rel="stylesheet" href={% static 'core/account.css' %} />
 <link rel="stylesheet" href={% static 'core/card.css' %} />
+<link rel="stylesheet" href={% static 'core/account.css' %} />
 {% endblock %}
 
 {% block content %}
 <h1>Profile</h1>
-<div class="content-section">
-  <div class="media">
-    {% if user.profile.img.url %}
-    <img class="rounded-circle account-img" src="{{ user.profile.img.url }}">
-    {% else %}
-    <img src={% static 'core/user.jpg' %}>
-    {% endif %}
-  </div>
 
+{% if user.profile.img.url %}
+<img id="profile-pic" src="{{ user.profile.img.url }}">
+{% else %}
+<img id="profile-pic" src={% static 'core/user.jpg' %}>
+{% endif %}
+
+<div class="content-section">
   <form method="POST" enctype="multipart/form-data" class="card">
     {% csrf_token %}
-    <h4>Update Profile</h4>
+    <h2>Update Profile</h2>
     {{ update_form }}
     {{ profile_form }}
-    <button class="btn btn-outline-info" type="submit">Update</button>
-
+    <button type="submit">Update</button>
   </form>
 
   <div id="tabs" class="card">
     <!-- Tab links -->
     <div id="tablinks-container">
-      <button class="tablinks active" onclick="openTab(event, 'Search')">Search</button>
-      <button class="tablinks" onclick="openTab(event, 'Friends')">Friends</button>
-      <button class="tablinks" onclick="openTab(event, 'Requests')">Requests</button>
+      <button class="tablinks active" onclick="openTab(event, 'search')">Search</button>
+      <button class="tablinks" onclick="openTab(event, 'friends')">Friends</button>
+      <button class="tablinks" onclick="openTab(event, 'requests')">Requests</button>
     </div>
 
     <!-- Tab content -->
-    <div id="Friends" class="tabcontent" style="display:none">
-      <table class="All friends table">
-        <tr>
-          <th>
-            <h4>Friends</h4>
-          </th>
-        </tr>
-        {% for user in friends %}
-        {% if not user.is_superuser %}
-        {% if not user == request.user %}
-        <tr>
-          <td>{{ user }}</td>
-        </tr>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-      </table>
+    <div id="friends" class="tabcontent" style="display:none">
+      {% for user in friends %}
+      {% if not user.is_superuser %}
+      {% if not user == request.user %}
+      <span>{{ user }}</span>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
     </div>
 
-    <div id="Search" class="tabcontent" id="defaultOpen">
+    <div id="search" class="tabcontent" id="defaultOpen">
       <form method="get">
         {{ friend_filter.form }}
       </form>
 
-      <table class="friends table">
-        <tr>
-          <th style="text-align:left">Users</th>
-        </tr>
+      <div>
         {% for user in allusers %}
         {% if not user.is_superuser %}
         {% if not user == request.user %}
         {% if not user in friends %}
-        <tr>
-          <td>{{user.username}}</td>
-          <td>
-            <a href="/send_friend_request/{{ user.id }}/">
-              <input type="button" value="Send Request">
-            </a>
-          </td>
-        </tr>
+        <div>
+          <span>{{user.username}}</span>
+          <a href="/send_friend_request/{{ user.id }}/">Request</a>
+        </div>
         {% else %}
-        <tr>
-          <td>{{user.username}}</td>
-          <td>Friend</td>
-        </tr>
+        <div>
+          <span>{{user.username}}</span>
+          <span>Friend</span>
+        </div>
         {% endif %}
         {% endif %}
         {% endif %}
         {% endfor %}
-      </table>
+        </table>
+      </div>
     </div>
 
-    <div id="Requests" class="tabcontent" style="display:none">
-      <h4>Requests</h4>
+    <div id="requests" class="tabcontent" style="display:none">
       {% if allrequests|length != 0 %}
-        {% for friend_request in allrequests %}
-        {% if friend_request.from_user != request.user %}
-        <h4>
-          {{ friend_request.from_user }}
-        </h4>
-        <a href="/accept_friend_request/{{friend_request.id}}/">
-          <input type="button" value="Accept">
-        </a>
-        <a href="/decline_friend_request/{{friend_request.id}}/">
-          <input type="button" value="Decline">
-        </a>
-        {% endif %}
-        {% endfor %}
+      {% for friend_request in allrequests %}
+      {% if friend_request.from_user != request.user %}
+      <div>
+        <span>{{ friend_request.from_user }}</span>
+        <span>
+          <a href="/accept_friend_request/{{friend_request.id}}/">Accept</a><br>
+          <a href="/decline_friend_request/{{friend_request.id}}/">Decline</a>
+        </span>
+    </div>
+      {% endif %}
+      {% endfor %}
       {% else %}
-        <p>No Requests</p>
+      <p>No Requests</p>
       {% endif %}
     </div>
   </div>
-</div> 
+</div>
 
 <h1>Your Events</h1>
 {% if not userEvents %}
@@ -118,28 +98,28 @@
 {% else %}
 <div id="events-container">
   {% for event in userEvents %}
-  <div class="card" data-link= "/event/{{ event.id }}/">
-      <img src={{ event.image.url }} style="width:100%">
-      <div>
-          <h3>{{ event.title }}</h6>
-              <p>{{ event.datetime }}</p>
-              <p>
-                  {{ event.street }},
-                  {{ event.area }},
-                  {{ event.city }}
-              </p>
-              <p>{{ event.desc }}</p>
+  <div class="card" data-link="/event/{{ event.id }}/">
+    <img src={{ event.image.url }} style="width:100%">
+    <div>
+      <h3>{{ event.title }}</h6>
+        <p>{{ event.datetime }}</p>
+        <p>
+          {{ event.street }},
+          {{ event.area }},
+          {{ event.city }}
+        </p>
+        <p>{{ event.desc }}</p>
 
-              <div id="tags">
-                  {% for tag in event.tags %}
-                  <div class="tag">{{ tag }}</div>
-                  {% endfor %}
-              </div>
+        <div id="tags">
+          {% for tag in event.tags %}
+          <div class="tag">{{ tag }}</div>
+          {% endfor %}
+        </div>
 
-              <p>Interested: {{ event.attendance }}</p>
+        <p>Interested: {{ event.attendance }}</p>
 
-              <a href="/event/{{ event.id }}/">Find out more...</a>
-      </div>
+        <a href="/event/{{ event.id }}/">Find out more...</a>
+    </div>
   </div>
   {% endfor %}
 </div>
@@ -152,33 +132,32 @@
 <div id="events-container">
   {% for event in friendEvents %}
   <div class="card" data-link="/event/{{ event.id }}/">
-      <img src={{ event.image.url }} style="width:100%">
-      <div>
-          <h3>{{ event.title }}</h6>
-              <p>{{ event.datetime }}</p>
-              <p>
-                  {{ event.street }},
-                  {{ event.area }},
-                  {{ event.city }}
-              </p>
-              <p>{{ event.desc }}</p>
+    <img src={{ event.image.url }} style="width:100%">
+    <div>
+      <h3>{{ event.title }}</h6>
+        <p>{{ event.datetime }}</p>
+        <p>
+          {{ event.street }},
+          {{ event.area }},
+          {{ event.city }}
+        </p>
+        <p>{{ event.desc }}</p>
 
-              <div id="tags">
-                  {% for tag in event.tags %}
-                  <div class="tag">{{ tag }}</div>
-                  {% endfor %}
-              </div>
+        <div id="tags">
+          {% for tag in event.tags %}
+          <div class="tag">{{ tag }}</div>
+          {% endfor %}
+        </div>
 
-              <p>Interested: {{ event.attendance }}</p>
+        <p>Interested: {{ event.attendance }}</p>
 
-              <a href="/event/{{ event.id }}/">Find out more...</a>
-      </div>
+        <a href="/event/{{ event.id }}/">Find out more...</a>
+    </div>
   </div>
   {% endfor %}
 </div>
 {% endif %}
 
-<script src={% static 'core/script.js' %}></script>
-{% comment %} <script src={% static 'core/index.js' %}></script> {% endcomment %}
+<script src={% static 'core/account.js' %}></script>
 <script src={% static 'core/card.js' %}></script>
 {% endblock %}
